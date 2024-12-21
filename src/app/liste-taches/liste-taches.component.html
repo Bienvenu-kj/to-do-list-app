@@ -1,0 +1,11 @@
+<div class="liste_taches flex flex-col gap-y-3 pb-3" id="list_taches">
+    <div *ngIf="motif" (click)="cacherMenuContext()" class="border absolute w-full left-0 top-0 h-screen bg-gray-300"></div>
+    <div *ngFor="let tache of listeTaches;let i=index" (contextmenu)="contextMenu($event,i)" class="rounded-xl bg-gray-100 h-16 p-4 flex items-center gap-x-4">  
+        <div class="w-4 h-4 border-2 border-gray-300 rounded-50"></div>
+        <p class="font-semibold">{{tache.nom}}</p>
+    </div>
+    <div *ngIf="motif" id="contextMenu" [class]='classD' [style]="elementPosition">
+        <div class='hoverItem' (click)='modifier()'>  {{mod}} </div>
+        <div class='hoverItem' (click)="supprimerTache()"> {{supp}} </div>
+    </div>
+</div>

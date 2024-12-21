@@ -47,22 +47,23 @@ Ce projet est conçu comme un outil pratique pour apprendre Angular, en utilisan
    npm install
 
 3. Démarrage :
-    Lancez le projet en mode développement :
 
-    ng serve
+      Lancez le projet en mode développement :
 
-    Ouvrez http://localhost:4200 dans votre navigateur pour voir l'application.
+      ng serve
+
+      Ouvrez http://localhost:4200 dans votre navigateur pour voir l'application.
 
 
 
 #Contribution
 
-    Toute contribution pour améliorer le projet est la bienvenue. Veuillez soumettre une issue ou une pull request pour proposer des améliorations ou corriger des bogues.
+   Toute contribution pour améliorer le projet est la bienvenue. Veuillez soumettre une issue ou une pull request pour proposer des améliorations ou corriger des bogues.
 
 #Licence
 
-    Ce projet est sous licence MIT.
-    Vous êtes libre de l'utiliser, de le modifier et de le distribuer, avec attribution.
+   Ce projet est sous licence MIT.
+   Vous êtes libre de l'utiliser, de le modifier et de le distribuer, avec attribution.
 
 
 ---
