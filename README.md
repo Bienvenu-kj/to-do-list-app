@@ -1,29 +1,34 @@
 # To-Do List Application  
 
 Une application web simple de gestion de tâches développée avec Angular.  
-Ce projet est conçu comme un outil pratique pour apprendre Angular, en utilisant des fonctionnalités de base telles que la gestion des composants, les interactions utilisateur, et la recherche dynamique.  
+Ce projet est conçu comme un outil pratique pour apprendre Angular, en utilisant des fonctionnalités de base telles que la gestion des composants, les interactions utilisateur, et la recherche dynamique.
+Elle est développée avec Angular pour apprendre les bases du framework.
+
 
 ## Fonctionnalités Actuelles  
 
-1. **Ajout statique de tâches** :  
-   - Les tâches peuvent être ajoutées statiquement au code source, car la gestion des formulaires en Angular n'a pas encore été implémentée.  
+- **Ajout dynamique de tâches** : Les utilisateurs peuvent ajouter des tâches via un formulaire interactif.  
 
-2. **Suppression d'une tâche** :  
-   - Les utilisateurs peuvent supprimer une tâche via un menu contextuel personnalisé.  
+- **Modification de tâches** : Les tâches existantes peuvent être modifiées grâce à la commande 'modifier la tâche' du menu contextuel personnalisé faisant appel à un formulaire interactif.
 
-3. **Recherche instantanée** :  
-   - Les utilisateurs peuvent effectuer une recherche dynamique parmi les tâches existantes.  
+- **Suppression d'une tâche** : Via un menu contextuel personnalisé.  
+
+- **Recherche instantanée** : Trouvez rapidement une tâche dans la liste existante.  
+
+- **Page d'accueil simple** : Présente un formulaire demandant un nom pour personnaliser l'expérience utilisateur avant de passer au menu des tâches.
 
 ## Fonctionnalités à venir  
 
-1. **Ajout dynamique de tâches** :  
-   - Permettre l'ajout de tâches via un formulaire en Angular.  
+## Fonctionnalités à venir  
 
-2. **Modification d'une tâche** :  
-   - Ajouter la possibilité de modifier les tâches existantes.  
+- **Marquage des tâches complétées** : Ajouter une case à cocher pour signaler une tâche terminée et un endroit pour les heberger.
 
-3. **Page d'accueil** :  
-   - Une page d'accueil pour se connecter et personnaliser l'interface utilisateur selon les préférences de l'utilisateur.  
+- **Tri et filtrage des tâches** : Par date ou par priorité.  
+
+- **notification de tâche à faire** : integration d'une possibilité de definir un rappel pour une tâche à faire.
+
+- **Sauvegarde des tâches** : Intégration avec une base de données (Firebase ou localStorage).  
+
 
 ## Technologies Utilisées  
 

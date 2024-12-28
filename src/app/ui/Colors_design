@@ -1,0 +1,16 @@
+   1. Design 1
+
+background-application : linear-gradient(#fbfeff,#e5e8e9,#e2e5e6);
+home page : 
+    h1 : gray-500
+    sous-titre: blue-600
+    button : blue-600 avec  box-shadow: 2px 5px 20px rgba(37, 99, 235, 0.4);
+taches page :
+
+   header : background: #fbfeff;
+            border : par defaut
+
+   barre de recherche : icon-color : gray-300
+                        placeholder : gray-300
+                        bg: gray-100;
+

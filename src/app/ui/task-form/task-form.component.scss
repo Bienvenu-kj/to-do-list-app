@@ -1,0 +1,72 @@
+*{
+    box-sizing:border-box;
+}
+@keyframes signale {
+    from{
+        border:none;
+        
+    }
+    to{
+        border: #B66C6C 1px solid;
+    }
+}
+
+
+section{
+    z-index:1450;
+    width:100%;
+    background : white;
+    padding : 1rem;
+    border-radius : 1rem 1rem 0 0;
+    form{
+        width: 100%;
+        input{
+            width : 100%;
+            padding: 0.8rem;
+            border-radius:8px;
+            border:none;
+            background: /*#F8EFEF*/ rgb(243, 244, 246);
+            // color:/*#DA9E9E*/ /*#B66C6C*/ rgb(209, 213, 219) ;
+            &::placeholder{
+                color:/*#DA9E9E*/ #B66C6C rgb(209, 213, 219);
+                
+            }
+        }
+        .emptyInput{
+            animation-name: signale;
+            animation-duration: 0.2s;
+            animation-iteration-count: 5;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+            animation-direction: alternate;
+            
+        }
+        .untouched{
+            border:none;
+        }
+        div{
+            margin-top: 1rem;
+            display : flex;
+            justify-content : space-between;
+            button{
+                color:/*#DA9E9E*/ #B66C6C rgb(209, 213, 219);
+                padding: 0.5rem 0.8rem;
+            border-radius:8px;
+            border:none;
+            background: /*#F8EFEF*/ rgb(243, 244, 246);
+            }
+            .notification{
+                display:flex;
+                align-items:center;
+                gap: 0.4rem;
+            }
+            .save-btn{
+                background:transparent;
+                /*border : 1px solid #B66C6C;*/
+            }
+            
+        }
+    }
+}
+
+

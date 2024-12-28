@@ -723,10 +723,6 @@
     align-self: center;
   }
   
-  .rounded-50 {
-    border-radius: 50%;
-  }
-  
   .rounded-2xl {
     border-radius: 1rem;
   }
@@ -819,17 +815,7 @@
     --tw-bg-opacity: 1;
     background-color: rgb(240 239 239 / var(--tw-bg-opacity, 1));
   }
-  
-  .bg-blue-500 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(59 130 246 / var(--tw-bg-opacity, 1));
-  }
-  
-  .bg-blue-600 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
-  }
-  
+ 
   .p-1 {
     padding: 0.25rem;
   }
@@ -911,9 +897,7 @@
     grid-row-gap: 0.75rem; /* 12px */
     row-gap: 0.75rem; /* 12px */
   }
-  .top-6 {
-    top: 1.5rem; /* 24px */
-  }
+
   .my-8 {
     margin-top: 2rem; /* 32px */
     margin-bottom: 2rem; /* 32px */
@@ -929,6 +913,9 @@
   .hidden{
     display : none;
   }
+  .tache{
+    color : rgb(63, 62, 62);
+  }
   .view{
    
       display: -webkit-box;
@@ -941,18 +928,28 @@
       -webkit-flex-direction: column;
       flex-direction: column;
       background: #fff;
-      height: 200px;
-      padding : 0.85rem 0;
+      height: max-content;
+      
       border-radius : 8px;
       box-shadow: 0 7px 18px rgb(0, 0, 0, 0.165);
-      row-gap : 1rem;
+      row-gap : rem;
       z-index : 100;
+      max-width: 100%;
+      margin : 1rem;
       }
+      
       .hoverItem{
-        padding : 0.4rem 4rem;
+      display:flex;
+      align-items: center;
+      gap:0.85rem;
+      color : rgb(63, 62, 62);
+       font-weight:500;
+       width: 100%;
+       margin:0.5rem 0;
+       padding : 0.5rem 1rem;
       }
       .hoverItem:hover{
-        background: rgba(243, 244, 246,1)
+        background: rgba(229, 231, 235,1)
       }
 
       .bg-gray-300 {
@@ -965,4 +962,20 @@
       }
       .left-0 {
         left: 0px;
+      }
+      .w-max {
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+      }
+      .h-max {
+        height: -webkit-max-content;
+        height: -moz-max-content;
+        height: max-content;
+      }
+      .h-full {
+        height: 100%;
+      }
+      .couverture{
+        background: rgba(0, 0, 0, 0.164);
       }
