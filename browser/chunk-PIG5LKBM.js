@@ -1,0 +1,1 @@
+import{Na as a,Oa as p,Ta as i,za as o}from"./chunk-KTPSBN2G.js";var t=class n{static \u0275fac=function(e){return new(e||n)};static \u0275cmp=o({type:n,selectors:[["app-page-not-found"]],decls:2,vars:0,template:function(e,m){e&1&&(a(0,"p"),i(1,"page-not-found works!"),p())},encapsulation:2})};export{t as default};
