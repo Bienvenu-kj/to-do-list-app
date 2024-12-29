@@ -32,10 +32,7 @@ export class TaskFormComponent implements OnInit {
       const elementAinitialiser:Taches = this.elementAmodifier;
       this.taskForm.patchValue(elementAinitialiser);
     }else{
-      const reunitialise:Taches={
-        taskName:'',
-      }
-      this.taskForm.patchValue(reunitialise)
+      this.taskForm.reset()
     }
   }
 

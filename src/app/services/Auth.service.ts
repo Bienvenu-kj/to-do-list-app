@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private router = inject(Router)
+  userName!:string;
   login():void{
     localStorage.setItem('logged','true');
     this.router.navigate(['tasks']);
@@ -18,4 +19,5 @@ export class AuthService {
       return false
     }
   }
+
 }

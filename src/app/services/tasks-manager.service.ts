@@ -9,21 +9,14 @@ export class TasksManagerService {
   constructor() { }
 
   taches:Taches[] = [
-    {
-      taskName : 'Faire le sport',
-      etat : 'Non commencée',
-    },
-    {
-      taskName: 'Faire le devoir',
-      etat : 'Non commencée',
-    },
-    {
-      taskName : 'Suivre un film',
-      etat : 'Non commencée'
-    }
+  
   ]
   elementAmodifier!:any;
   indexDelementAmodifier!:number;
+
+  supprimerUnTache(index:number){
+    let newListTache = this.taches.splice(index,1);
+  }
 
   ElementAmodifier(index:number){
     this.elementAmodifier = this.taches[index]

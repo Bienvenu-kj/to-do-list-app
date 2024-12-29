@@ -34,14 +34,13 @@ export class ListeTachesComponent {
     'top': `` ,
      'left': `` ,
      'position': 'absolute'
-  }
+  } 
   cacherMenuContext() {
     this.motif = false;
   }
   supprimerTache(){
-    let newListTache = this.listeTaches.splice(this.index,1);
+    this.TaskManager.supprimerUnTache(this.index)
     this.motif = !this.motif;
-    console.log(newListTache)
   }
   modifier(){
     const elementAmodifier:Taches = this.listeTaches[this.index];

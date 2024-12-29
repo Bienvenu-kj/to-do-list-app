@@ -34,25 +34,32 @@ tachesBrutes = this.tacheServ.taches // taches brutes
                                     // pour le preremplire (true) lors de la modification d'une tâche 
                                     // elle est partagé à l'enfant task-form.component pour ça.
 
-
+ champsRecherche!:HTMLInputElement;
  RecherTaches(event: Event){
    this.rechercheReusi = this.recherche
    this.rechercheReusi = true;
+   this.champsRecherche = event.target as HTMLInputElement
    let champs = event.target as HTMLInputElement;
    let champs_valeur = champs.value;
    this.champsValeur= champs_valeur;
    this.tachesFiltres = this.tachesBrutes;
    this.tachesFiltres = this.tachesFiltres.filter(tache =>tache.taskName.toLocaleLowerCase().includes(champs_valeur.toLocaleLowerCase()))
+   const tachesFiltres = this.tachesFiltres
    this.rechercher = this.champsValeur?"Recherche en cours":"";
-   if(this.tachesFiltres.length === 0){
-     this.champsValeur = 'Aucune tache trouvée selon votre recherche !'
-     this.rechercher = ''
+   if(tachesFiltres.length === 0){
+    if (this.champsValeur){
+      this.champsValeur = 'Aucune tache trouvée selon votre recherche !'
+      this.rechercher = ''
+    } 
    }
  }
  formView(){
+
   this.OnTenteDeModifier = false; // rend le champs reunitialisé pour permettre l'ajout d'une tâche
   this.cache = !this.cache // inverse la valeur de la propriété cache probablement 'false' en 'true' pour 
                           // faire apparaître le formulaire
+  this.champsRecherche.value = '';
+  this.tachesFiltres = this.tachesBrutes
  }
  recevoirlafermeture(e:boolean){
   this.cache = e // la propriété cache reçoit la valeur probablement  'false' (emise par l'enfant task-form.component (recevoirLafermeture) lors de la soumission du 
@@ -70,10 +77,14 @@ tachesBrutes = this.tacheServ.taches // taches brutes
   // transmettre l'élément à supprimer) probablement du type Taches 
  }
  onVeutModifier(m:boolean){
+  this.champsRecherche.value = '';
   this.OnTenteDeModifier = m // la proriété TaskToModifiier reçoit la valeur (emise par l'enfant liste-taches.component (OnVeutModifier) lors du clic sur la commande 'modidier' 
   // transmettre l'élément à supprimer) probablement du type Taches
+  // this.tachesFiltres = this.tachesBrutes
  }
 //  ajouTache(nom:string){
 //    return this.taches.unshift({nom: `${nom}`, etat:'Non commencée'});
 //  }
+
+
 }
