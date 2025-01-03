@@ -1,1 +1,23 @@
-<p>page-not-found works!</p>
+<main class="conteneur gap-y-9 flex flex-col bordure-t-l-r p-8 radius-t-l">
+  <header class="flex flex-col gap-y-4">
+    <h1 class="text-center text-2xl font-semibold">404 : Page non trouvée !</h1>
+    <p class="font-semibold text-blue-500 text-center">
+      Il semble que vous ayiez suivi un lien cassé ou que la page que vous
+      cherchez ait été déplacée.
+    </p>
+  </header>
+  <main>
+    <ul class="solution">
+      <li>Retournez à la <a routerLink="/home">page d'accueil</a></li>
+      <li>
+        Si vous pensez que c'est une erreur, <a href="">contactez-nous</a>
+      </li>
+    </ul>
+  </main>
+  <footer>
+    <p>
+      Pendant que vous êtes là, prenez une minute pour planifier votre prochaine
+      réussite <a routerLink="/tasks">ici</a>.
+    </p>
+  </footer>
+</main>

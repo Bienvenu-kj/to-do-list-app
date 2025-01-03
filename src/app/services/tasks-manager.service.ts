@@ -3,38 +3,52 @@ import { Taches } from '../models/taches.model';
 import { NgModel } from '@angular/forms';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TasksManagerService {
-  constructor() { }
+  constructor() {}
 
-  taches:Taches[] = [
-  
-  ]
-  elementAmodifier!:any;
-  indexDelementAmodifier!:number;
+  taches: Taches[] = [];
+  taches_filtrés = this.taches;
+  elementAmodifier!: any;
+  indexDelementAmodifier!: number;
+  tachesTerminees: Taches[] = [];
 
-  supprimerUnTache(index:number){
-    let newListTache = this.taches.splice(index,1);
+  marqueTacheCommeTerminée(index: number) {
+    const tacheTerminee = this.taches.splice(index, 1);
+
+    this.tachesTerminees.unshift({
+      taskName: `${tacheTerminee[0].taskName}`,
+      etat: 'terminée',
+    });
   }
 
-  ElementAmodifier(index:number){
-    this.elementAmodifier = this.taches[index]
-    this.indexDelementAmodifier = index
+  supprimerUnTache(index: number) {
+    let newListTache = this.taches.splice(index, 1);
+    console.log(newListTache);
   }
-  inverseLindex(index:number){
-    this.indexDelementAmodifier = index
-  }
-  
-  modiferTache(tache:Taches){
-    this.taches[this.indexDelementAmodifier].taskName = tache.taskName
-    this.taches[this.indexDelementAmodifier].etat = 'Modifiée'
+  supprimerUnTacheTerminee(index: number) {
+    let newListTache = this.tachesTerminees.splice(index, 1);
+    console.log(newListTache);
   }
 
-  ajoutTAches(nom:string,etat?:string){
+  ElementAmodifier(index: number) {
+    this.elementAmodifier = this.taches[index];
+    this.indexDelementAmodifier = index;
+  }
+  inverseLindex(index: number) {
+    this.indexDelementAmodifier = index;
+  }
+
+  modiferTache(tache: Taches) {
+    this.taches[this.indexDelementAmodifier].taskName = tache.taskName;
+    this.taches[this.indexDelementAmodifier].etat = 'Modifiée';
+  }
+
+  ajoutTAches(nom: string, etat?: string) {
     this.taches.unshift({
-      taskName:`${nom}`,
-      etat:`${etat}`
-    })
+      taskName: `${nom}`,
+      etat: `${etat}`,
+    });
   }
 }
