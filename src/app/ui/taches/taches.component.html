@@ -41,7 +41,7 @@
     </div>
   </section>
   @if(tachesFiltres.length || tacheTerminee.length){
-  <section class="flex flex-col gap-y-8">
+  <section class="mt-6 flex flex-col gap-y-8">
     <div class="flex flex-col gap-y-5">
       <app-liste-taches
         (onSupprime)="onSupprime($event)"
@@ -55,7 +55,7 @@
   </section>
   } @else{
   <section
-    class="w-full top-72 h-full flex-col flex justify-center items-center gap-y-4"
+    class="mt-6 w-full top-72 h-full flex-col flex justify-center items-center gap-y-4"
   >
     <h4 class="recherche text-center">Pas de tâches.</h4>
     <p class="recherche text-center">Commencer par en ajouter une !</p>

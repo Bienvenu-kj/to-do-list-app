@@ -742,6 +742,12 @@ video {
   border-width: 2px;
   border-color: rgb(179, 188, 209);
 }
+.mt-4 {
+  margin-top: 1rem; /* 16px */
+}
+.mt-6 {
+  margin-top: 1.5rem; /* 24px */
+}
 .border-gray-900 {
   --tw-border-opacity: 1;
   border-color: rgb(17 24 39 / var(--tw-border-opacity, 1));
@@ -978,6 +984,7 @@ video {
   z-index: 0;
 }
 body {
+  max-height: max-content;
   height: 100vh;
   padding: 0 1rem;
   background: linear-gradient(#fbfeff, #e5e8e9, #e2e5e6);
@@ -1003,8 +1010,9 @@ input:focus {
   top: 2rem; /* 32px */
 }
 .conteneur {
+  max-width:max-content;
   height: 100%;
-  margin: 2rem auto;
+  margin: auto;
 }
 .text-gray-200 {
   --tw-text-opacity: 1;
