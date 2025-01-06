@@ -4,22 +4,35 @@
     (click)="cacherMenuContext()"
     class="rounded-xl couverture absolute w-full left-0 top-0 h-full"
   ></div>
+  @if (listeTaches.length) {
+  <div>
+    <h3 class="mb-3 text-sm px-4 tache-ttr">
+      {{
+        listeTaches.length && listeTaches.length == 1
+          ? "Tâche non terminée"
+          : "Tâches non terminées"
+      }}
+    </h3>
 
-  <div
-    [class.tache-animation]="anime"
-    *ngFor="let tache of listeTaches; let i = index"
-    (touchstart)="OnTouchStart($event, i)"
-    (touchend)="OnTouchEnd()"
-    (contextmenu)="onRightClick($event, i)"
-    class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
-  >
-    <div
-      (click)="marqueTacheCommeTerminee(i)"
-      class="marqueur"
-      class="w-4 h-4 border-2 rounded-50"
-    ></div>
-    <p class="tache font-semibold">{{ tache.taskName }}</p>
+    <div class="flex flex-col gap-y-3 pb-3">
+      <div
+        [class.tache-animation]="anime"
+        *ngFor="let tache of listeTaches; let i = index"
+        (touchstart)="OnTouchStart($event, i)"
+        (touchend)="OnTouchEnd()"
+        (contextmenu)="onRightClick($event, i)"
+        class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
+      >
+        <div
+          (click)="marqueTacheCommeTerminee(i)"
+          class="marqueur"
+          class="w-4 h-4 border-2 rounded-50"
+        ></div>
+        <p class="tache font-semibold">{{ tache.taskName }}</p>
+      </div>
+    </div>
   </div>
+  }
   <div
     *ngIf="motif"
     id="contextMenu"
@@ -73,10 +86,14 @@
   @if(tacheTerminee.length){
   <div class="tache-termine-container">
     <h3
-      class="mb-3 text-sm px-4 tache-termine-ttr"
+      class="mb-3 text-sm px-4 tache-ttr"
       [class.tache-tr-animation]="animeterminee"
     >
-      Tâche terminée
+      {{
+        tacheTerminee.length && tacheTerminee.length == 1
+          ? "Tâche terminée"
+          : "Tâches terminées"
+      }}
     </h3>
     <div class="flex flex-col gap-y-3 pb-3">
       <div
@@ -87,7 +104,11 @@
         (contextmenu)="onRightClick($event, i)"
         class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
       >
-        <div class="marqueur" class="rounded-50">
+        <div
+          (click)="marqueTacheCommeNonTerminee(i)"
+          class="marqueur"
+          class="rounded-50"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

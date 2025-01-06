@@ -28,7 +28,7 @@ export class ListeTachesComponent implements OnInit {
   @Output() onSupprime = new EventEmitter<boolean>();
   private TaskManager = inject(TasksManagerService);
   tacheTerminee = this.TaskManager.tachesTerminees;
-  @Input() anime!: boolean;
+  @Input() anime: boolean = false;
 
   animeterminee = false;
   supp: any;
@@ -107,6 +107,14 @@ export class ListeTachesComponent implements OnInit {
     this.animeterminee = true;
     this.TaskManager.marqueTacheCommeTerminée(index);
   }
+  inverseAnimeApres1s() {
+    this.anime = false;
+  }
+  marqueTacheCommeNonTerminee(index: number) {
+    this.anime = true;
+    this.TaskManager.marqueTacheCommeNonTerminée(index);
+  }
+
   ngOnInit(): void {
     document.addEventListener('click', (e) => {
       const element = e.target as HTMLElement;

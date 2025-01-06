@@ -103,6 +103,7 @@ export default class TachesComponent {
   onAjouteUntache(e: boolean) {
     this.anime = e;
   }
+
   onSupprime(e: boolean) {
     if (e) {
       this.rechercher = '';

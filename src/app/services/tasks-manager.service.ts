@@ -22,6 +22,13 @@ export class TasksManagerService {
       etat: 'terminée',
     });
   }
+  marqueTacheCommeNonTerminée(index: number) {
+    const tacheTerminee = this.tachesTerminees.splice(index, 1);
+    this.taches.unshift({
+      taskName: `${tacheTerminee[0].taskName}`,
+      etat: 'non terminée',
+    });
+  }
 
   supprimerUnTache(index: number) {
     let newListTache = this.taches.splice(index, 1);
