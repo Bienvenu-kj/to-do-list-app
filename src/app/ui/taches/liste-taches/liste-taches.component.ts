@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   inject,
+  input,
   Input,
   OnInit,
   Output,
@@ -27,7 +28,9 @@ export class ListeTachesComponent implements OnInit {
   @Output() onSupprime = new EventEmitter<boolean>();
   private TaskManager = inject(TasksManagerService);
   tacheTerminee = this.TaskManager.tachesTerminees;
+  @Input() anime!: boolean;
 
+  animeterminee = false;
   supp: any;
   mod: any;
 
@@ -101,6 +104,7 @@ export class ListeTachesComponent implements OnInit {
   }
 
   marqueTacheCommeTerminee(index: number) {
+    this.animeterminee = true;
     this.TaskManager.marqueTacheCommeTerminée(index);
   }
   ngOnInit(): void {

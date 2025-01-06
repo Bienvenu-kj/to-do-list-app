@@ -281,9 +281,29 @@
   text-decoration-color: rgb(119, 125, 139);
   color: rgb(143, 151, 168);
 }
-// .border-2-c {
-//   border-color: ;
-// }
+.tache-termine-container {
+  transition: 0.25s ease-in-out;
+}
+.tache-termine-ttr {
+  color: rgb(136, 141, 156);
+  text-shadow: 0 0 12px rgb(95, 100, 110, 0.5);
+  transition: 0.5s ease-in-out;
+}
+.tache-tr-animation {
+  @keyframes impressionne {
+    from {
+      opacity: 0.5;
+      transform: translateY(10%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  & {
+    animation: impressionne 0.45s ease-in-out;
+  }
+}
 .view {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -348,4 +368,21 @@
 }
 .marqueur {
   display: inline;
+}
+
+.tache-animation {
+  transition: animation 0.55s ease-in-out;
+  @keyframes impressionne {
+    from {
+      opacity: 0.5;
+      transform: translateY(-10%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  & {
+    animation: impressionne 0.45s ease-in-out;
+  }
 }

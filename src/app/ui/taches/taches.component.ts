@@ -18,7 +18,7 @@ export default class TachesComponent {
   motifP: boolean = false; //
 
   cache = false; // servi pour afficher ou cacher le formulaire ou autre element lui attaché
-
+  anime = false;
   tachesBrutes = this.tacheServ.taches; // taches brutes
   tachesFiltres = this.tachesBrutes; // les taches filtrées
   tacheTerminee = this.tacheServ.tachesTerminees;
@@ -99,6 +99,9 @@ export default class TachesComponent {
     if (e) {
       this.tachesFiltres = this.tachesBrutes;
     }
+  }
+  onAjouteUntache(e: boolean) {
+    this.anime = e;
   }
   onSupprime(e: boolean) {
     if (e) {

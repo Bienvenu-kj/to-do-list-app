@@ -50,6 +50,7 @@
         (elementAmodifier)="getEditedElement($event)"
         [listeTaches]="tachesFiltres"
         [motif]="motifP"
+        [anime]="anime"
       />
     </div>
   </section>
@@ -94,6 +95,7 @@
       [onTenteDeModier]="OnTenteDeModifier"
       [elementAmodifier]="TaskToModifier"
       (onSoumet)="recevoirLaSoumission($event)"
+      (onAjouteTache)="onAjouteUntache($event)"
       (recevoirLafermeture)="recevoirlafermeture($event)"
     />
   </section>

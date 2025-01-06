@@ -6,6 +6,7 @@
   ></div>
 
   <div
+    [class.tache-animation]="anime"
     *ngFor="let tache of listeTaches; let i = index"
     (touchstart)="OnTouchStart($event, i)"
     (touchend)="OnTouchEnd()"
@@ -70,10 +71,16 @@
     </div>
   </div>
   @if(tacheTerminee.length){
-  <div>
-    <h3 class="mb-4">Tâche terminée</h3>
+  <div class="tache-termine-container">
+    <h3
+      class="mb-3 text-sm px-4 tache-termine-ttr"
+      [class.tache-tr-animation]="animeterminee"
+    >
+      Tâche terminée
+    </h3>
     <div class="flex flex-col gap-y-3 pb-3">
       <div
+        [class.tache-animation]="animeterminee"
         *ngFor="let tacheT of tacheTerminee; let i = index"
         (touchstart)="OnTouchStart($event, i)"
         (touchend)="OnTouchEnd()"

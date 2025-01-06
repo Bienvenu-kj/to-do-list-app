@@ -24,6 +24,7 @@ export class TaskFormComponent implements OnInit {
   private menuManS = inject(MenuManagerService); //
   @Output() recevoirLafermeture = new EventEmitter<boolean>();
   @Output() onSoumet = new EventEmitter<boolean>();
+  @Output() onAjouteTache = new EventEmitter<boolean>();
   @Input() elementAmodifier!: Taches;
   @Input() onTenteDeModier!: boolean;
 
@@ -61,6 +62,7 @@ export class TaskFormComponent implements OnInit {
         this.tacheServ.modiferTache(task);
       } else {
         this.tacheServ.ajoutTAches(task.taskName, 'Non commencée');
+        this.onAjouteTache.emit(true);
       }
       this.recevoirLafermeture.emit(false);
       this.onSoumet.emit(true);
