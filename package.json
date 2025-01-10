@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build:prod": "ng build --prod",
+    "deploy": "gh-pages -d dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
