@@ -48,7 +48,7 @@ export default class ResearchComponent implements OnInit {
     // this.champsValeur = champs_valeur;
     this.tachesFiltres = [...this.tachesBrutes, ...this.tacheTerminee];
     this.tachesFiltres = this.tachesFiltres.filter((tache) =>
-      tache.taskName.includes(champs_valeur)
+      tache.taskName.toLocaleLowerCase().includes(champs_valeur.toLocaleLowerCase())
     );
 
     if (champs_valeur.length) {
