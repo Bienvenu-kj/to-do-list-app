@@ -1,4 +1,7 @@
-<main class="conteneur relative flex gap-y-6 flex-col">
+<main
+  class="lesDisparus conteneur relative flex gap-y-6 flex-col"
+  [class.startReaserching]="onVeutOuONVeutPlusRechercher"
+>
   <section
     id="header"
     class="bordure-t-l-r bg px-4 radius-t-l sticky top-8 pt-6 pb-2 flex flex-col gap-y-8"
@@ -8,8 +11,8 @@
       <span class="size-1 bg-gray-900 rounded-50"></span>
       <span class="size-1 bg-gray-900 rounded-50"></span>
     </div>
-    <div>
-      <h1 class="text-2xl font-semibold">Tâches</h1>
+    <div [class.startReaserching]="onVeutOuONVeutPlusRechercher">
+      <h1 class="lesDisparus text-2xl font-semibold">Tâches</h1>
     </div>
     <div class="relative flex items-center">
       <div class="absolute left-3">
@@ -30,25 +33,26 @@
         </svg>
       </div>
       <input
-        (input)="RecherTaches($event)"
+        (click)="onVeutOuOnVeutPlusRechercher()"
+        routerLink="/researchtasks"
         class="speeking border p-2 rounded-2xl bg-gray-100 w-full px-10"
         type="text"
         placeholder="Rechercher des taches"
       />
     </div>
-    <div class="flex justify-between recherche">
-      {{ rechercher }}<span>{{ champsValeur }}</span>
-    </div>
   </section>
-  @if(tachesFiltres.length || tacheTerminee.length){
-  <section class="mt-6 flex flex-col gap-y-8">
+  @if(tachesBrutes.length || tacheTerminees.length){
+  <section
+    [class.startReaserching]="onVeutOuONVeutPlusRechercher"
+    class="lesDisparus mt-6 flex flex-col gap-y-8"
+  >
     <div class="flex flex-col gap-y-5">
       <app-liste-taches
         (onSupprime)="onSupprime($event)"
         (OnVeutModifier)="onVeutModifier($event)"
         (voirLeFormulaire)="recevoirlouverture($event)"
         (elementAmodifier)="getEditedElement($event)"
-        [listeTaches]="tachesFiltres"
+        [listeTaches]="tachesBrutes"
         [motif]="motifP"
         [anime]="anime"
       />
@@ -56,16 +60,17 @@
   </section>
   } @else{
   <section
-    class="mt-6 w-full top-72 h-full flex-col flex justify-center items-center gap-y-4"
+    [class.startReaserching]="onVeutOuONVeutPlusRechercher"
+    class="lesDisparus mt-6 w-full top-72 h-full flex-col flex justify-center items-center gap-y-4"
   >
     <h4 class="recherche text-center">Pas de tâches.</h4>
     <p class="recherche text-center">Commencer par en ajouter une !</p>
   </section>
   }
-
   <section
-    (click)="formView()"
-    class="self-center btnShadow bg-blue-600 fixed p-4 bottom-6 rounded-50"
+    (click)="ajouterTache()"
+    [class.startReaserchingB]="OnVeutOuONVeutPlusRechercher2"
+    class="lesDisparus self-center btnShadow bg-blue-600 fixed p-4 bottom-6 rounded-50"
   >
     <svg
       class="size-6"
@@ -89,14 +94,15 @@
     </svg>
   </section>
 
-  <section id="formTask" *ngIf="cache" class="radius-t-l">
-    <div id="close-menu" onclick="formView()"></div>
-    <app-task-form
-      [onTenteDeModier]="OnTenteDeModifier"
-      [elementAmodifier]="TaskToModifier"
-      (onSoumet)="recevoirLaSoumission($event)"
-      (onAjouteTache)="onAjouteUntache($event)"
-      (recevoirLafermeture)="recevoirlafermeture($event)"
-    />
+  <section id="formTaskContainer" *ngIf="cache" class="lesDisparus">
+    <div id="formTask" class="conteneur">
+      <app-task-form
+        [onTenteDeModier]="OnTenteDeModifier"
+        [elementAmodifier]="TaskToModifier"
+        (onSoumet)="recevoirLaSoumission($event)"
+        (onAjouteTache)="onAjouteUntache($event)"
+        (recevoirLafermeture)="recevoirlafermeture($event)"
+      />
+    </div>
   </section>
 </main>

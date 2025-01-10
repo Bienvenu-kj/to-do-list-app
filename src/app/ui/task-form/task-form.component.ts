@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   inject,
+  input,
   Input,
   OnInit,
   Output,
@@ -25,11 +26,11 @@ export class TaskFormComponent implements OnInit {
   @Output() recevoirLafermeture = new EventEmitter<boolean>();
   @Output() onSoumet = new EventEmitter<boolean>();
   @Output() onAjouteTache = new EventEmitter<boolean>();
-  @Input() elementAmodifier!: Taches;
-  @Input() onTenteDeModier!: boolean;
+  elementAmodifier = input.required<Taches>();
+  onTenteDeModier = input.required<boolean>();
 
   fb = inject(FormBuilder);
-  cache = this.menuManS.cache;
+  cache = this.menuManS.cacheOUmontre;
   taskForm = this.fb.nonNullable.group({
     taskName: ['', [Validators.required]],
   });
@@ -37,8 +38,8 @@ export class TaskFormComponent implements OnInit {
   empty!: {};
   testeur!: number;
   ngOnInit(): void {
-    if (this.onTenteDeModier) {
-      const elementAinitialiser: Taches = this.elementAmodifier;
+    if (this.onTenteDeModier()) {
+      const elementAinitialiser: Taches = this.elementAmodifier();
       this.taskForm.patchValue(elementAinitialiser);
     } else {
       this.taskForm.reset();
@@ -57,11 +58,11 @@ export class TaskFormComponent implements OnInit {
       const task: Taches = {
         ...this.taskForm.getRawValue(),
       };
-      if (this.onTenteDeModier) {
-        console.log(this.elementAmodifier.taskName);
+      if (this.onTenteDeModier()) {
+        console.log(this.elementAmodifier().taskName, task.etat);
         this.tacheServ.modiferTache(task);
       } else {
-        this.tacheServ.ajoutTAches(task.taskName, 'Non commencée');
+        this.tacheServ.ajoutTAches(task.taskName, 'Non terminée');
         this.onAjouteTache.emit(true);
       }
       this.recevoirLafermeture.emit(false);

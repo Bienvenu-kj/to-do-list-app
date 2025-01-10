@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MenuManagerService {
-  cache = true;
-  basculeEnVrai = () => (this.cache = true);
+  cacheOUmontre = true;
+  basculeEnVrai = () => (this.cacheOUmontre = true);
 
-  basculeEnFaux = () => (this.cache = false);
+  basculeEnFaux = () => (this.cacheOUmontre = false);
   inverse() {
-    return (this.cache = !this.cache);
+    return (this.cacheOUmontre = !this.cacheOUmontre);
   }
 }

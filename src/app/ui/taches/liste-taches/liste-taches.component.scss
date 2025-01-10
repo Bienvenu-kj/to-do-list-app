@@ -268,26 +268,8 @@
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
 }
 
-.hidden {
-  display: none;
-}
-.tache,
-.tacheTerminee {
-  color: rgb(63, 62, 62);
-  width: 95%;
-}
-.tacheTerminee {
-  text-decoration: line-through;
-  text-decoration-color: rgb(119, 125, 139);
-  color: rgb(143, 151, 168);
-}
 .tache-termine-container {
   transition: 0.25s ease-in-out;
-}
-.tache-ttr {
-  color: rgb(136, 141, 156);
-  text-shadow: 0 0 12px rgb(95, 100, 110, 0.5);
-  transition: 0.5s ease-in-out;
 }
 .tache-tr-animation {
   @keyframes impressionne {
@@ -303,45 +285,6 @@
   & {
     animation: impressionne 0.45s ease-in-out;
   }
-}
-.view {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  background: #fff;
-  height: max-content;
-
-  border-radius: 8px;
-  box-shadow: 0 7px 18px rgb(0, 0, 0, 0.165);
-  row-gap: rem;
-  z-index: 100;
-  width: 200px;
-  min-width: 200px;
-  max-width: 100%;
-  margin: 1rem;
-}
-
-.hoverItem {
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  color: rgb(63, 62, 62);
-  font-weight: 500;
-  width: 100%;
-  margin: 0.5rem 0;
-  padding: 0.5rem 1rem;
-}
-.hoverItem:hover {
-  background: rgba(229, 231, 235, 1);
 }
 .bg-gray-300 {
   --tw-bg-opacity: 0.7;
@@ -363,13 +306,13 @@
 .h-full {
   height: 100%;
 }
-.couverture {
-  background: rgba(0, 0, 0, 0.164);
-}
+
 .marqueur {
   display: inline;
 }
-
+.tache-non-terminee {
+  // outline: 1px solid red;
+}
 .tache-animation {
   transition: animation 0.55s ease-in-out;
   @keyframes impressionne {

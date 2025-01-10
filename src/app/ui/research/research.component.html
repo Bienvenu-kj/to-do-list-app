@@ -1,0 +1,163 @@
+<main id="conteneur" class="conteneur startResearch">
+  <div class="bordure-t-l-r">
+    <header class="pos-stck">
+      <div class="barre-recherche">
+        <div role="button" class="retourner" routerLink="/tasks">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#5f6368"
+          >
+            <path
+              d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"
+            />
+          </svg>
+        </div>
+        <div class="relative flex items-center">
+          <div class="absolute left-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="rgba(190, 213, 219,1)"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-search"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </div>
+          <input
+            id="researchInput"
+            (click)="OnVeutRechercher()"
+            (input)="RecherTaches($event)"
+            class="speeking border p-2 rounded-2xl bg-gray-100 w-full px-10"
+            type="text"
+            placeholder="Rechercher des taches"
+          />
+        </div>
+      </div>
+      @if(onVeutRecherhcher){
+      <div class="resultRecherche">
+        <div class="text-sm tache-ttr">
+          {{ TacheTrouvee }}
+          {{ TacheTrouvee && TacheTrouvee === 1 ? "résultat" : "résultats" }}
+        </div>
+        <!-- <div></div> -->
+      </div>
+      }
+    </header>
+    @if(onVeutRecherhcher){
+    <main class="mt-16">
+      <div class="flex flex-col gap-y-3 pb-3">
+        @for (tache of tachesFiltres; track $index; let i= $index) {
+        @if(tache.etat==="terminée"){
+        <div
+          class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
+          (touchstart)="OnTouchStart($event, i, tache.id)"
+          (touchend)="OnTouchEnd()"
+          (contextmenu)="onRightClick($event, i, tache.id)"
+        >
+          <div class="marqueur" class="rounded-50">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="rgb(179, 188, 209)"
+              stroke="rgb(243, 244, 246)"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-circle-check"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <p class="tacheTerminee font-semibold">{{ tache.taskName }}</p>
+        </div>
+
+        }@else {
+        <div
+          class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
+          (touchstart)="OnTouchStart($event, i, tache.id)"
+          (touchend)="OnTouchEnd()"
+          (contextmenu)="onRightClick($event, i, tache.id)"
+        >
+          <div class="marqueur" class="w-4 h-4 border-2 rounded-50"></div>
+          <p class="tache font-semibold">{{ tache.taskName }}</p>
+        </div>
+        } }
+      </div>
+      <div *ngIf="motif" class="menuContextContainer">
+        <div
+          id="contextMenu"
+          class="menuContextuel"
+          [class]="classD"
+          [style]="elementPosition"
+        >
+          <div class="hoverItem" (click)="modifier()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-pencil"
+            >
+              <path
+                d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+              />
+              <path d="m15 5 4 4" />
+            </svg>
+
+            Modifier la tâche
+          </div>
+          <div class="hoverItem" (click)="supprimerTache()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-trash-2"
+            >
+              <path d="M3 6h18" />
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+              <line x1="10" x2="10" y1="11" y2="17" />
+              <line x1="14" x2="14" y1="11" y2="17" />
+            </svg>
+            Suprrimer la tâche
+          </div>
+        </div>
+      </div>
+    </main>
+    } @if(voirLeFormulaire){
+    <section id="formTaskContainer" class="lesDisparus">
+      <div id="formTask" class="conteneur">
+        <app-task-form
+          [onTenteDeModier]="OnVeutModifier"
+          [elementAmodifier]="elementAmodifier"
+          (recevoirLafermeture)="recevoirlafermeture($event)"
+        />
+      </div>
+    </section>
+    }
+  </div>
+</main>

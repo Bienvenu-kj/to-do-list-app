@@ -1,4 +1,5 @@
-export interface Taches{
-    taskName:string,
-    etat?:string,
+export interface Taches {
+  id?: number;
+  taskName: string;
+  etat?: string;
 }

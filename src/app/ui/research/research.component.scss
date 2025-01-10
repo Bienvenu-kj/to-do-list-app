@@ -1,0 +1,47 @@
+main#conteneur {
+  transition: all 0.4s ease-in-out;
+  transition-behavior: smooth;
+  header {
+    .barre-recherche {
+      display: grid;
+      column-gap: 4%;
+      grid-template-columns: minmax(0, 4%) minmax(0, 92%);
+      .retourner {
+        display: flex;
+        align-items: center;
+      }
+    }
+    .barre-recherche > div:nth-child(1):only-child {
+      grid-column: 1/-1;
+    }
+  }
+}
+.startResearch {
+  padding-top: 2rem;
+}
+.startResearch > div {
+  height: 100%;
+  padding: 1rem;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+.speeking::placeholder {
+  color: rgb(156, 163, 175);
+}
+.resultRecherche {
+  margin-top: 1rem;
+}
+.menuContextContainer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1099;
+  background: rgba(0, 0, 0, 0.15);
+  top: 0;
+  left: 0;
+}
+
+.pos-stck {
+  position: sticky;
+  top: 4rem;
+}
