@@ -1,0 +1,1 @@
+import{i as e,ia as o,l as r}from"./chunk-P5HLS2QV.js";var a=class t{router=r(o);userName;login(){localStorage.setItem("logged","true"),this.router.navigate(["tasks"])}isLogin(){return localStorage.getItem("logged")?!0:(this.router.navigate([""]),!1)}static \u0275fac=function(i){return new(i||t)};static \u0275prov=e({token:t,factory:t.\u0275fac,providedIn:"root"})};export{a};
