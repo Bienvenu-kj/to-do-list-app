@@ -81,23 +81,23 @@
       Suprrimer la tâche
     </div>
   </div>
-  @if(tacheTerminee.length){
+  @if(tacheTerminee().length){
   <div class="tache-termine-container">
     <h3
       class="mb-3 text-sm px-4 tache-ttr"
       [class.tache-tr-animation]="animeterminee"
     >
       {{
-        tacheTerminee.length && tacheTerminee.length == 1
+        tacheTerminee().length && tacheTerminee().length == 1
           ? "Tâche terminée"
           : "Tâches terminées"
       }}
     </h3>
     <div class="flex flex-col gap-y-3 pb-3">
+      @for(tacheT of tacheTerminee(); track $index;let i = $index){
       <div
         [class.tache-animation]="animeterminee"
-        *ngFor="let tacheT of tacheTerminee; let i = index"
-        (touchstart)="OnTouchStart($event, i, id)"
+        (touchstart)="OnTouchStart($event, i, tacheT.id)"
         (touchend)="OnTouchEnd()"
         (contextmenu)="onRightClick($event, i, tacheT.id)"
         class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
@@ -125,6 +125,7 @@
         </div>
         <p class="tacheTerminee font-semibold">{{ tacheT.taskName }}</p>
       </div>
+      }
     </div>
   </div>
   }

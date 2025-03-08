@@ -1,5 +1,5 @@
 <main
-  class="lesDisparus conteneur relative flex gap-y-6 flex-col"
+  class="conteneur relative flex gap-y-6 flex-col"
   [class.startReaserching]="onVeutOuONVeutPlusRechercher"
 >
   <section
@@ -12,7 +12,7 @@
       <span class="size-1 bg-gray-900 rounded-50"></span>
     </div>
     <div [class.startReaserching]="onVeutOuONVeutPlusRechercher">
-      <h1 class="lesDisparus text-2xl font-semibold">Tâches</h1>
+      <h1 class="text-2xl font-semibold">Tâches</h1>
     </div>
     <div class="relative flex items-center">
       <div class="absolute left-3">
@@ -41,10 +41,10 @@
       />
     </div>
   </section>
-  @if(tachesBrutes.length || tacheTerminees.length){
+  @if(tachesBrutes().length || tacheTerminees().length){
   <section
     [class.startReaserching]="onVeutOuONVeutPlusRechercher"
-    class="lesDisparus mt-6 flex flex-col gap-y-8"
+    class="mt-6 flex flex-col gap-y-8"
   >
     <div class="flex flex-col gap-y-5">
       <app-liste-taches
@@ -52,7 +52,7 @@
         (OnVeutModifier)="onVeutModifier($event)"
         (voirLeFormulaire)="recevoirlouverture($event)"
         (elementAmodifier)="getEditedElement($event)"
-        [listeTaches]="tachesBrutes"
+        [listeTaches]="tachesBrutes()"
         [motif]="motifP"
         [anime]="anime"
       />
@@ -61,7 +61,7 @@
   } @else{
   <section
     [class.startReaserching]="onVeutOuONVeutPlusRechercher"
-    class="lesDisparus mt-6 w-full top-72 h-full flex-col flex justify-center items-center gap-y-4"
+    class="mt-6 w-full top-72 h-full flex-col flex justify-center items-center gap-y-4"
   >
     <h4 class="recherche text-center">Pas de tâches.</h4>
     <p class="recherche text-center">Commencer par en ajouter une !</p>
@@ -70,7 +70,7 @@
   <section
     (click)="ajouterTache()"
     [class.startReaserchingB]="OnVeutOuONVeutPlusRechercher2"
-    class="lesDisparus self-center btnShadow bg-blue-600 fixed p-4 bottom-6 rounded-50"
+    class="self-center btnShadow bg-blue-600 fixed p-4 bottom-6 rounded-50"
   >
     <svg
       class="size-6"
@@ -94,7 +94,7 @@
     </svg>
   </section>
 
-  <section id="formTaskContainer" *ngIf="cache" class="lesDisparus">
+  <section id="formTaskContainer" *ngIf="cache" class="">
     <div id="formTask" class="conteneur">
       <app-task-form
         [onTenteDeModier]="OnTenteDeModifier"

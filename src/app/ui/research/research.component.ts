@@ -25,7 +25,7 @@ export default class ResearchComponent implements OnInit {
   tacheTerminee = this.taskManager.tachesTerminees;
   tachesBrutes = this.taskManager.taches; // taches brutes
   tache: Taches[] = [];
-  tachesFiltres = [...this.tachesBrutes, ...this.tacheTerminee]; // les taches filtrées
+  tachesFiltres = [...this.tachesBrutes(), ...this.tacheTerminee()]; // les taches filtrées
   champsRecherche!: HTMLInputElement;
   OnVeutModifier!: boolean;
   voirLeFormulaire!: boolean;
@@ -46,9 +46,11 @@ export default class ResearchComponent implements OnInit {
     let champs_valeur = champs.value;
     this.champValeur = champs_valeur;
     // this.champsValeur = champs_valeur;
-    this.tachesFiltres = [...this.tachesBrutes, ...this.tacheTerminee];
+    this.tachesFiltres = [...this.tachesBrutes(), ...this.tacheTerminee()];
     this.tachesFiltres = this.tachesFiltres.filter((tache) =>
-      tache.taskName.toLocaleLowerCase().includes(champs_valeur.toLocaleLowerCase())
+      tache.taskName
+        .toLocaleLowerCase()
+        .includes(champs_valeur.toLocaleLowerCase())
     );
 
     if (champs_valeur.length) {
@@ -77,7 +79,7 @@ export default class ResearchComponent implements OnInit {
   supprimerTache() {
     this.taskManager.supprimerUnTache(this.id);
     this.motif = !this.motif;
-    this.tachesFiltres = [...this.tachesBrutes, ...this.tacheTerminee];
+    this.tachesFiltres = [...this.tachesBrutes(), ...this.tacheTerminee()];
     this.tachesFiltres = this.tachesFiltres.filter((tache) =>
       tache.taskName.includes(this.champValeur)
     );
@@ -131,7 +133,7 @@ export default class ResearchComponent implements OnInit {
   recevoirlafermeture(e: boolean) {
     this.voirLeFormulaire = e; // la propriété cache reçoit la valeur probablement  'false' (emise par l'enfant task-form.component (recevoirLafermeture) lors de la soumission du
     // formulaire pour faire disparaître le formulaire)
-    this.tachesFiltres = [...this.tachesBrutes, ...this.tacheTerminee];
+    this.tachesFiltres = [...this.tachesBrutes(), ...this.tacheTerminee()];
     this.tachesFiltres = this.tachesFiltres.filter((tache) =>
       tache.taskName.includes(this.champValeur)
     );

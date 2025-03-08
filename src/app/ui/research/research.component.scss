@@ -1,14 +1,21 @@
 main#conteneur {
-  transition: all 0.4s ease-in-out;
-  transition-behavior: smooth;
+  // transition: all 0.4s ease-in-out;
+  // transition-behavior: smooth;
   header {
+    border: 1px solid red;
     .barre-recherche {
+      border: 1px solid red;
       display: grid;
       column-gap: 4%;
-      grid-template-columns: minmax(0, 4%) minmax(0, 92%);
+      grid-template-columns: minmax(0, 8%) minmax(0, 88%);
       .retourner {
         display: flex;
+        border: 1px solid red;
         align-items: center;
+        svg {
+          max-width: 60px;
+          max-height: 40px;
+        }
       }
     }
     .barre-recherche > div:nth-child(1):only-child {

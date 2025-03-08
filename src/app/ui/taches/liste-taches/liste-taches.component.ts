@@ -13,7 +13,7 @@ import { MenuManagerService } from '../../../services/menu-manager.service';
 
 @Component({
   selector: 'app-liste-taches',
-  imports: [NgFor, NgIf],
+  imports: [NgIf],
   templateUrl: './liste-taches.component.html',
   styleUrl: './liste-taches.component.scss',
 })
@@ -47,17 +47,18 @@ export class ListeTachesComponent implements OnInit {
   };
 
   supprimerTache() {
+    console.log(this.id);
     this.TaskManager.supprimerUnTache(this.id);
     this.motif = !this.motif;
-    this.listeTaches = this.TaskManager.taches;
-    this.tacheTerminee = this.TaskManager.tachesTerminees;
+    this.listeTaches = this.TaskManager.taches();
+    this.tacheTerminee.set(this.TaskManager.tachesTerminees());
     this.onSupprime.emit(true);
   }
 
   modifier() {
     const toutesLesTaches: Taches[] = [
       ...this.listeTaches,
-      ...this.tacheTerminee,
+      ...this.tacheTerminee(),
     ];
     const elementAmodifier = toutesLesTaches.filter(
       (tache) => tache.id === this.id
@@ -81,7 +82,8 @@ export class ListeTachesComponent implements OnInit {
       this.classD = 'view';
       this.index = i;
       this.id = id as number;
-      console.log(this.elementPosition.top, this.elementPosition.left);
+      // console.log(this.elementPosition.top, this.elementPosition.left);
+      console.log(this.tacheTerminee());
     }, 600);
   }
   OnTouchEnd() {
@@ -97,7 +99,8 @@ export class ListeTachesComponent implements OnInit {
     this.classD = 'view';
     this.index = index;
     this.id = id as number;
-    console.log(this.elementPosition.top, this.elementPosition.left);
+    // console.log(this.elementPosition.top, this.elementPosition.left);
+    console.log(this.tacheTerminee);
   }
 
   marqueTacheCommeTerminee(index: number) {

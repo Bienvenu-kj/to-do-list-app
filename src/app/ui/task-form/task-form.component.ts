@@ -59,7 +59,7 @@ export class TaskFormComponent implements OnInit {
         ...this.taskForm.getRawValue(),
       };
       if (this.onTenteDeModier()) {
-        console.log(this.elementAmodifier().taskName, task.etat);
+        // console.log(this.elementAmodifier().taskName, task.etat);
         this.tacheServ.modiferTache(task);
       } else {
         this.tacheServ.ajoutTAches(task.taskName, 'Non terminée');
