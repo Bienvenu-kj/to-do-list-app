@@ -20,7 +20,7 @@ export class TaskFormComponent implements OnInit {
   private formManager = inject(FormManagerService);
   private fb = inject(FormBuilder);
 
-  elementAmodifier = this.tacheServ.elementAmodifier;
+  elementAmodifier = this.tacheServ.taskToEdit;
   onTenteDeModier = this.formManager.needToModifyAtask;
 
   taskForm = this.fb.nonNullable.group({
@@ -60,18 +60,18 @@ export class TaskFormComponent implements OnInit {
         if (this.formManager.approuveLaDate(task.notification as string)) {
           this.notificationServ.pushNotificationForDoingTask(task);
           if (this.onTenteDeModier()) {
-            this.tacheServ.modiferTache(task);
+            this.tacheServ.updateTask(task);
           } else {
-            this.tacheServ.ajoutTAches(task);
+            this.tacheServ.addTask(task);
             console.log(task);
           }
           this.formManager.actualiseModificateurs();
         }
       } else {
         if (this.onTenteDeModier()) {
-          this.tacheServ.modiferTache(task);
+          this.tacheServ.updateTask(task);
         } else {
-          this.tacheServ.ajoutTAches(task);
+          this.tacheServ.addTask(task);
           console.log(task);
         }
         this.formManager.actualiseModificateurs();

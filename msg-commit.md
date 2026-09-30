@@ -1,6 +1,6 @@
-# refactor(tasks): renommer le modèle de tâche
+# refactor(tasks): harmoniser l’API du gestionnaire de tâches
 
-- renomme le fichier `taches.model.ts` en `task.model.ts`
-- remplace l’interface `Taches` par `Task`
-- met à jour les imports et annotations de type dans l’application
-- harmonise le formatage des fichiers TypeScript concernés
+- renomme en anglais les signals et méthodes de `TasksManagerService`
+- met à jour les références dans les services et composants consommateurs
+- harmonise les variables locales utilisées pour manipuler les tâches
+- supprime les membres inutilisés du gestionnaire de tâches

@@ -29,8 +29,8 @@ export default class TachesComponent implements OnInit {
       this.notifServ.setFirstConnexion();
     }
   }
-  tachesBrutes = this.tacheServ.taches;
-  tacheTerminees = this.tacheServ.tachesTerminees;
+  tachesBrutes = this.tacheServ.tasks;
+  tacheTerminees = this.tacheServ.completedTasks;
 
   champsRecherche!: HTMLInputElement;
 

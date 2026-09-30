@@ -32,8 +32,8 @@ export default class ResearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.taskManager.actualiseTaches();
-    this.taskManager.actualiseTachesTerminees();
+    this.taskManager.refreshTasks();
+    this.taskManager.refreshCompletedTasks();
     document.getElementById('researchInput')?.focus();
     this.researchServ.tachesCourantesRercherchees();
     this.researchServ.reunialiseRerchercheesRecenctes();

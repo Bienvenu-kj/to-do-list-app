@@ -35,8 +35,8 @@ export class ListeTachesComponent implements OnInit {
 
   anime = signal(false);
   viewForm = this.formManager.viewForm;
-  tachesTerminees = this.TaskManager.tachesTerminees;
-  tachesBrutes = this.TaskManager.taches;
+  tachesTerminees = this.TaskManager.completedTasks;
+  tachesBrutes = this.TaskManager.tasks;
 
   tachesRecherchees = this.resarchServ.tachesFiltres;
   tachesRechercheeTerminees = computed(() =>
@@ -87,8 +87,8 @@ export class ListeTachesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.TaskManager.actualiseTaches();
-    this.TaskManager.actualiseTachesTerminees();
+    this.TaskManager.refreshTasks();
+    this.TaskManager.refreshCompletedTasks();
 
     document.addEventListener('click', (e) => {
       const element = e.target as HTMLElement;
@@ -99,7 +99,7 @@ export class ListeTachesComponent implements OnInit {
   }
 
   supprimerTache() {
-    this.TaskManager.supprimerUnTache(this.id);
+    this.TaskManager.deleteTask(this.id);
     this.motif = !this.motif;
     this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
   }
@@ -112,7 +112,7 @@ export class ListeTachesComponent implements OnInit {
     const elementAmodifier = toutesLesTaches.filter(
       (tache) => tache.id === this.id,
     )[0];
-    this.TaskManager.ElementAmodifier(this.id);
+    this.TaskManager.selectTaskToEdit(this.id);
     this.formManager.onViewingForm();
     this.formManager.onModifyingTask();
 
@@ -149,7 +149,7 @@ export class ListeTachesComponent implements OnInit {
 
   marqueTacheCommeTerminee(id: number | undefined) {
     this.animeterminee = true;
-    this.TaskManager.marqueTacheCommeTerminée(id);
+    this.TaskManager.markTaskAsCompleted(id);
     this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
   }
 
@@ -159,7 +159,7 @@ export class ListeTachesComponent implements OnInit {
 
   marqueTacheCommeNonTerminee(id: number | undefined) {
     this.anime.set(true);
-    this.TaskManager.marqueTacheCommeNonTerminée(id);
+    this.TaskManager.markTaskAsIncomplete(id);
     this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
   }
 

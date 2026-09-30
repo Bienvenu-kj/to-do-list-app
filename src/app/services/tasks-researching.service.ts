@@ -13,8 +13,8 @@ export class TasksResearchingService {
   tachesFiltres = signal<Task[]>([]);
   onVeutRecherhcher = signal<boolean>(false);
   TacheTrouvee = signal<number>(0);
-  tachesNonTerminees = computed(() => this.taskManager.taches());
-  tacheTerminees = computed(() => this.taskManager.tachesTerminees());
+  tachesNonTerminees = computed(() => this.taskManager.tasks());
+  tacheTerminees = computed(() => this.taskManager.completedTasks());
   ToutesLesTaches = computed(() => [
     ...this.tachesNonTerminees(),
     ...this.tacheTerminees(),
