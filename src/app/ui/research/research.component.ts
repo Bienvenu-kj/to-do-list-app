@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 
-import { AuthService } from '../../services/Auth.service';
+import { AuthService } from '../../services/auth.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
 import { TaskSearchService } from '../../services/task-search.service';
 import { TaskListComponent } from '../taches/liste-taches/liste-taches.component';
@@ -24,7 +24,7 @@ export default class ResearchComponent implements OnInit {
   }
 
   closeSearch(): void {
-    this.authService.ilNeVeutPlusRechercher();
+    this.authService.stopSearch();
   }
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
 
-import { AuthService } from './services/Auth.service';
+import { AuthService } from './services/auth.service';
 
 export const routes: Routes = [
   {
@@ -9,8 +9,8 @@ export const routes: Routes = [
     title: 'page de recherche',
     loadComponent: () => import('./ui/research/research.component'),
     canActivate: [
-      () => inject(AuthService).isLogin(),
-      () => inject(AuthService).researching(),
+      () => inject(AuthService).isLoggedIn(),
+      () => inject(AuthService).isSearching(),
     ],
   },
   {
@@ -22,7 +22,7 @@ export const routes: Routes = [
     path: 'tasks',
     title: 'taches',
     loadComponent: () => import('./ui/taches/taches.component'),
-    canActivate: [() => inject(AuthService).isLogin()],
+    canActivate: [() => inject(AuthService).isLoggedIn()],
   },
   {
     path: '404',

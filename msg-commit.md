@@ -1,6 +1,6 @@
-# refactor(forms): harmoniser la gestion du formulaire
+# refactor(auth): harmoniser le service de session
 
-- harmonise en anglais l’état et les méthodes de `FormManagerService`
-- met à jour `TaskFormComponent` et les templates consommateurs
-- simplifie la validation de la date de notification
-- supprime `MenuManagerService` devenu inutilisé
+- normalise le nom du fichier `auth.service.ts`
+- harmonise en anglais l’état et les méthodes de recherche
+- met à jour les gardes de routes et les composants consommateurs
+- supprime la propriété `userName` inutilisée

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AuthService } from '../../services/Auth.service';
+import { AuthService } from '../../services/auth.service';
 import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { NotificationsService } from '../../services/notifications.service';
 })
 export default class HomePageComponent {
   constructor(
-    private Auth: AuthService,
+    private authService: AuthService,
     private notifServ: NotificationsService,
   ) {}
 
@@ -20,6 +20,6 @@ export default class HomePageComponent {
     if (champPrenom.value) {
       this.notifServ.setFirstConnexion(true, champPrenom.value);
     }
-    this.Auth.login();
+    this.authService.login();
   }
 }

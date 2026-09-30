@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 
-import { AuthService } from '../../services/Auth.service';
+import { AuthService } from '../../services/auth.service';
 import { FormManagerService } from '../../services/form-manager.service';
 import { NotificationsService } from '../../services/notifications.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
@@ -37,6 +37,6 @@ export default class TasksComponent implements OnInit {
   }
 
   openSearch(): void {
-    this.authService.ilVeutRechercher();
+    this.authService.startSearch();
   }
 }

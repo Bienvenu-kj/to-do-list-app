@@ -6,35 +6,35 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private router = inject(Router);
-  researching = signal(Boolean(sessionStorage.getItem('researching')) || false);
-  userName!: string;
+  isSearching = signal(Boolean(sessionStorage.getItem('researching')));
 
-  private refeshResearching() {
-    this.researching.set(
-      Boolean(sessionStorage.getItem('researching')) || false,
-    );
+  private refreshSearchState(): void {
+    this.isSearching.set(Boolean(sessionStorage.getItem('researching')));
   }
+
   login(): void {
     sessionStorage.setItem('logged', 'true');
     this.router.navigate(['tasks']);
   }
-  ilVeutRechercher() {
+
+  startSearch(): void {
     sessionStorage.setItem('researching', 'true');
     this.router.navigate(['researchtasks']);
-    this.refeshResearching();
-  }
-  ilNeVeutPlusRechercher() {
-    sessionStorage.removeItem('researching');
-    this.router.navigate(['tasks']);
-    this.refeshResearching();
+    this.refreshSearchState();
   }
 
-  isLogin(): boolean {
+  stopSearch(): void {
+    sessionStorage.removeItem('researching');
+    this.router.navigate(['tasks']);
+    this.refreshSearchState();
+  }
+
+  isLoggedIn(): boolean {
     if (sessionStorage.getItem('logged')) {
       return true;
-    } else {
-      this.router.navigate(['']);
-      return false;
     }
+
+    this.router.navigate(['']);
+    return false;
   }
 }
