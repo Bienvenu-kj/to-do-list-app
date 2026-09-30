@@ -1,20 +1,10 @@
-import {
-  Component,
-  computed,
-  EventEmitter,
-  inject,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
-import { TasksManagerService } from '../../services/tasks-manager.service';
-import { Taches } from '../../models/taches.model';
+import { Component, computed, inject, OnInit } from '@angular/core';
 
-import { TaskFormComponent } from '../task-form/task-form.component';
-import { NgIf } from '@angular/common';
-import {AuthService} from '../../services/Auth.service'
+import { AuthService } from '../../services/Auth.service';
+import { TasksManagerService } from '../../services/tasks-manager.service';
 import { TasksResearchingService } from '../../services/tasks-researching.service';
-import { ListeTachesComponent } from "../taches/liste-taches/liste-taches.component";
+import { ListeTachesComponent } from '../taches/liste-taches/liste-taches.component';
+
 @Component({
   selector: 'app-research',
   imports: [ListeTachesComponent],
@@ -27,9 +17,8 @@ export default class ResearchComponent implements OnInit {
   private researchServ = inject(TasksResearchingService);
   onVeutRecherhcher = this.researchServ.onVeutRecherhcher;
   TacheTrouvee = this.researchServ.TacheTrouvee;
-  tachesFiltres = computed(()=>this.researchServ.tachesFiltres()) ;
+  tachesFiltres = computed(() => this.researchServ.tachesFiltres());
   champsRecherche!: HTMLInputElement;
-
 
   RecherTaches(event: Event) {
     this.champsRecherche = event.target as HTMLInputElement;
@@ -38,8 +27,8 @@ export default class ResearchComponent implements OnInit {
     this.researchServ.rechercheTache(champs_valeur);
   }
 
-  onVeutPlusChercher(){
-    this.authServ.ilNeVeutPlusRechercher()
+  onVeutPlusChercher() {
+    this.authServ.ilNeVeutPlusRechercher();
   }
 
   ngOnInit(): void {
@@ -50,4 +39,3 @@ export default class ResearchComponent implements OnInit {
     this.researchServ.reunialiseRerchercheesRecenctes();
   }
 }
-

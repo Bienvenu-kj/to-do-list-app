@@ -1,6 +1,6 @@
-# chore(project): moderniser les scripts et documenter la feuille de route
+# refactor(tasks): renommer le modèle de tâche
 
-- remplace les anciennes commandes de build et de déploiement
-- ajoute des scripts dédiés au build et aux tests d’intégration continue
-- documente les étapes de modernisation en commençant par l’architecture
-- nettoie le balisage inutilisé de la page principale
+- renomme le fichier `taches.model.ts` en `task.model.ts`
+- remplace l’interface `Taches` par `Task`
+- met à jour les imports et annotations de type dans l’application
+- harmonise le formatage des fichiers TypeScript concernés

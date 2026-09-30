@@ -1,7 +1,7 @@
-import { Injectable,signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormManagerService {
   viewForm = signal(false);
@@ -14,39 +14,41 @@ export class FormManagerService {
   /*/
   needToModifyAtask = signal(false);
   needToAddNewTask = signal(false);
-  constructor() { }
+  constructor() {}
 
-  onViewingForm(){
+  onViewingForm() {
     this.viewForm.set(true);
   }
-  onModifyingTask(){
+  onModifyingTask() {
     this.needToModifyAtask.set(true);
   }
-  onAddingtask(){
+  onAddingtask() {
     this.needToAddNewTask.set(true);
   }
-  actualiseModificateurs(){
+  actualiseModificateurs() {
     this.needToModifyAtask.set(false);
     this.needToAddNewTask.set(false);
     this.viewForm.set(false);
   }
 
-  approuveLaDate(UserdataForNotification:string){
+  approuveLaDate(UserdataForNotification: string) {
     const date = new Date(UserdataForNotification);
     const notifDate = date.getTime();
     const now = new Date().getTime();
     let dateCorrect = false;
-    if(notifDate>now){
+    if (notifDate > now) {
       dateCorrect = true;
-    }
-    else if(notifDate===now){
-      dateCorrect =false;
-      alert("La date que vous avez mis est egalement à ce moment ! veillez choisir un temps qui est un peu en avant !");
-    }else{
+    } else if (notifDate === now) {
       dateCorrect = false;
-      alert("Vous avez mis une date qui est déjà passée, notification non mise en place, modifier votre tache pour tenter la mettre !");
+      alert(
+        'La date que vous avez mis est egalement à ce moment ! veillez choisir un temps qui est un peu en avant !',
+      );
+    } else {
+      dateCorrect = false;
+      alert(
+        'Vous avez mis une date qui est déjà passée, notification non mise en place, modifier votre tache pour tenter la mettre !',
+      );
     }
-  return dateCorrect;
+    return dateCorrect;
   }
-
 }

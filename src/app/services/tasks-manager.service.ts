@@ -1,6 +1,6 @@
-import { Injectable, OnInit, signal, WritableSignal } from '@angular/core';
-import { Taches } from '../models/taches.model';
-import { NgModel } from '@angular/forms';
+import { Injectable, signal } from '@angular/core';
+
+import { Task } from '../models/task.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,26 +8,26 @@ import { NgModel } from '@angular/forms';
 export class TasksManagerService {
   constructor() {}
 
-  taches = signal<Taches[]>(
+  taches = signal<Task[]>(
     JSON.parse(localStorage.getItem('unfinishedTasks') as string) || [],
   );
   taches_filtrés = this.taches;
-  elementAmodifier = signal<Taches>({
+  elementAmodifier = signal<Task>({
     taskName: '',
     etat: '',
   });
-  tacheAsupprimer = signal<Taches>({
+  tacheAsupprimer = signal<Task>({
     taskName: '',
   });
   indexDelementAmodifier = signal(0);
-  tachesTerminees = signal<Taches[]>(
+  tachesTerminees = signal<Task[]>(
     JSON.parse(localStorage.getItem('finishedTasks') as string) || [],
   );
   toutesLesTaches = [...this.taches(), ...this.tachesTerminees()];
   id = signal(Number(localStorage.getItem('id')) || 0);
 
   marqueTacheCommeTerminée(id: number | undefined) {
-    const tachesNonTerminées: Taches[] =
+    const tachesNonTerminées: Task[] =
       JSON.parse(localStorage.getItem('unfinishedTasks') as string) || [];
     let tacheIndex = 0;
     const tacheTerminee = tachesNonTerminées.find((tache, index) => {
@@ -52,7 +52,7 @@ export class TasksManagerService {
   }
 
   marqueTacheCommeNonTerminée(id: number | undefined) {
-    const tachesTerminées: Taches[] =
+    const tachesTerminées: Task[] =
       JSON.parse(localStorage.getItem('finishedTasks') as string) || [];
     let tacheIndex = 0;
     const tacheNonTerminee = tachesTerminées.find((tache, index) => {
@@ -79,7 +79,7 @@ export class TasksManagerService {
   supprimerUnTache(id: number) {
     this.actualiseTaches();
     this.actualiseTachesTerminees();
-    let element: Taches;
+    let element: Task;
     let index: number;
     let toutesLesTaches = [...this.taches(), ...this.tachesTerminees()];
     for (let index = 0; index < toutesLesTaches.length; index++) {
@@ -118,7 +118,7 @@ export class TasksManagerService {
     this.indexDelementAmodifier.set(index);
   }
 
-  modiferTache(tache: Taches) {
+  modiferTache(tache: Task) {
     let index;
     if (tache.notification) {
       this.elementAmodifier().notification = tache.notification;
@@ -141,8 +141,8 @@ export class TasksManagerService {
     }
   }
 
-  ajoutTAches(tache: Taches) {
-    let taches: Taches[] =
+  ajoutTAches(tache: Task) {
+    let taches: Task[] =
       JSON.parse(localStorage.getItem('unfinishedTasks') as string) || [];
     const id = taches.length + 1;
     localStorage.setItem('id', `${id}`);

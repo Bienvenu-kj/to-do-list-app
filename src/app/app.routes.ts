@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+
 import { AuthService } from './services/Auth.service';
 
 export const routes: Routes = [
@@ -7,7 +8,10 @@ export const routes: Routes = [
     path: 'researchtasks',
     title: 'page de recherche',
     loadComponent: () => import('./ui/research/research.component'),
-    canActivate: [() => inject(AuthService).isLogin(), () => inject(AuthService).researching()],
+    canActivate: [
+      () => inject(AuthService).isLogin(),
+      () => inject(AuthService).researching(),
+    ],
   },
   {
     path: 'home',
@@ -35,4 +39,3 @@ export const routes: Routes = [
     redirectTo: '404',
   },
 ];
-

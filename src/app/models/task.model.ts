@@ -1,6 +1,6 @@
-export interface Taches {
+export interface Task {
   id?: number;
   taskName: string;
   etat?: string;
-  notification?:string,
+  notification?: string;
 }

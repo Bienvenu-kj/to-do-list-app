@@ -1,17 +1,13 @@
-import { CommonModule} from '@angular/common';
-import { Component, inject, OnInit} from '@angular/core';
-import { RouterOutlet, TitleStrategy } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,CommonModule],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styles: ``,
 })
-export class AppComponent implements OnInit{
-  ngOnInit(): void {
-
-  }
-
+export class AppComponent implements OnInit {
+  ngOnInit(): void {}
 }

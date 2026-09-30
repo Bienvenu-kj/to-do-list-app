@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { AuthService } from '../../services/Auth.service';
 import { NotificationsService } from '../../services/notifications.service';
 
@@ -9,14 +10,16 @@ import { NotificationsService } from '../../services/notifications.service';
   styleUrl: './home-page.component.scss',
 })
 export default class HomePageComponent {
-  constructor(private Auth: AuthService,private notifServ:NotificationsService) {}
+  constructor(
+    private Auth: AuthService,
+    private notifServ: NotificationsService,
+  ) {}
 
-  login(e: MouseEvent,champPrenom:HTMLInputElement) {
+  login(e: MouseEvent, champPrenom: HTMLInputElement) {
     e.preventDefault();
-    if(champPrenom.value){
-      this.notifServ.setFirstConnexion(true,champPrenom.value);
+    if (champPrenom.value) {
+      this.notifServ.setFirstConnexion(true, champPrenom.value);
     }
     this.Auth.login();
-
   }
 }
