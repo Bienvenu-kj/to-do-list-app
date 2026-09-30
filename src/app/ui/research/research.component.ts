@@ -12,20 +12,19 @@ import { ListeTachesComponent } from '../taches/liste-taches/liste-taches.compon
   styleUrl: './research.component.scss',
 })
 export default class ResearchComponent implements OnInit {
-  taskManager = inject(TasksManagerService);
-  private authServ = inject(AuthService);
+  private taskManager = inject(TasksManagerService);
+  private authService = inject(AuthService);
   private taskSearchService = inject(TaskSearchService);
   isSearching = this.taskSearchService.isSearching;
   matchingTaskCount = this.taskSearchService.matchingTaskCount;
-  searchInput!: HTMLInputElement;
 
   searchTasks(event: Event): void {
-    this.searchInput = event.target as HTMLInputElement;
-    this.taskSearchService.searchTasks(this.searchInput.value);
+    const searchInput = event.target as HTMLInputElement;
+    this.taskSearchService.searchTasks(searchInput.value);
   }
 
-  onVeutPlusChercher() {
-    this.authServ.ilNeVeutPlusRechercher();
+  closeSearch(): void {
+    this.authService.ilNeVeutPlusRechercher();
   }
 
   ngOnInit(): void {
