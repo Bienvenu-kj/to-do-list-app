@@ -1,6 +1,6 @@
-# refactor(task-list): harmoniser le composant de liste
+# refactor(forms): harmoniser la gestion du formulaire
 
-- remplace `ListeTachesComponent` par `TaskListComponent`
-- harmonise en anglais les états, méthodes et bindings du composant
-- supprime les propriétés et traitements devenus inutiles
-- améliore le typage du minuteur utilisé pour l’appui long
+- harmonise en anglais l’état et les méthodes de `FormManagerService`
+- met à jour `TaskFormComponent` et les templates consommateurs
+- simplifie la validation de la date de notification
+- supprime `MenuManagerService` devenu inutilisé

@@ -3,7 +3,6 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { Task } from '../../models/task.model';
 import { FormManagerService } from '../../services/form-manager.service';
-import { MenuManagerService } from '../../services/menu-manager.service';
 import { NotificationsService } from '../../services/notifications.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
 
@@ -14,26 +13,22 @@ import { TasksManagerService } from '../../services/tasks-manager.service';
   styleUrl: './task-form.component.scss',
 })
 export class TaskFormComponent implements OnInit {
-  private tacheServ = inject(TasksManagerService); // inection du service de gestions de taches
-  private menuManS = inject(MenuManagerService); //
-  private notificationServ = inject(NotificationsService);
+  private tasksManager = inject(TasksManagerService);
+  private notificationsService = inject(NotificationsService);
   private formManager = inject(FormManagerService);
   private fb = inject(FormBuilder);
 
-  elementAmodifier = this.tacheServ.taskToEdit;
-  onTenteDeModier = this.formManager.needToModifyAtask;
+  taskToEdit = this.tasksManager.taskToEdit;
+  isEditingTask = this.formManager.isEditingTask;
 
   taskForm = this.fb.nonNullable.group({
     taskName: ['', [Validators.required]],
     notification: '',
   });
-  empty!: {};
-  testeur!: number;
-
   ngOnInit(): void {
-    if (this.onTenteDeModier()) {
-      const elementAinitialiser: Task = this.elementAmodifier();
-      this.taskForm.patchValue(elementAinitialiser);
+    if (this.isEditingTask()) {
+      const taskToInitialize: Task = this.taskToEdit();
+      this.taskForm.patchValue(taskToInitialize);
     } else {
       this.taskForm.reset();
     }
@@ -45,36 +40,36 @@ export class TaskFormComponent implements OnInit {
         !element.closest('#addTask') &&
         !element.closest('#contextMenu')
       ) {
-        this.formManager.actualiseModificateurs();
+        this.formManager.resetFormState();
         console.log('on est en form task');
       }
     });
   }
 
-  OnSubmit() {
+  onSubmit(): void {
     if (this.taskForm.valid) {
       const task: Task = {
         ...this.taskForm.getRawValue(),
       };
       if (task.notification) {
-        if (this.formManager.approuveLaDate(task.notification as string)) {
-          this.notificationServ.pushNotificationForDoingTask(task);
-          if (this.onTenteDeModier()) {
-            this.tacheServ.updateTask(task);
+        if (this.formManager.isNotificationDateValid(task.notification)) {
+          this.notificationsService.pushNotificationForDoingTask(task);
+          if (this.isEditingTask()) {
+            this.tasksManager.updateTask(task);
           } else {
-            this.tacheServ.addTask(task);
+            this.tasksManager.addTask(task);
             console.log(task);
           }
-          this.formManager.actualiseModificateurs();
+          this.formManager.resetFormState();
         }
       } else {
-        if (this.onTenteDeModier()) {
-          this.tacheServ.updateTask(task);
+        if (this.isEditingTask()) {
+          this.tasksManager.updateTask(task);
         } else {
-          this.tacheServ.addTask(task);
+          this.tasksManager.addTask(task);
           console.log(task);
         }
-        this.formManager.actualiseModificateurs();
+        this.formManager.resetFormState();
       }
     } else {
       this.taskForm.markAllAsTouched();

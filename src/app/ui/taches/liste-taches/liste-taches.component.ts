@@ -31,7 +31,7 @@ export class TaskListComponent implements OnInit {
   searchQuery = this.taskSearchService.searchQuery;
 
   isTaskAnimating = signal(false);
-  viewForm = this.formManager.viewForm;
+  isFormVisible = this.formManager.isFormVisible;
   completedTasks = this.tasksManager.completedTasks;
   tasks = this.tasksManager.tasks;
 
@@ -86,8 +86,8 @@ export class TaskListComponent implements OnInit {
 
   editTask(): void {
     this.tasksManager.selectTaskToEdit(this.selectedTaskId);
-    this.formManager.onViewingForm();
-    this.formManager.onModifyingTask();
+    this.formManager.showForm();
+    this.formManager.startTaskEditing();
 
     this.taskSearchService.refreshSearchResults(this.searchQuery());
   }

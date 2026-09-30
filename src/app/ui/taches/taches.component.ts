@@ -33,7 +33,7 @@ export default class TasksComponent implements OnInit {
   completedTasks = this.tasksManager.completedTasks;
 
   openTaskForm(): void {
-    this.formManager.onViewingForm();
+    this.formManager.showForm();
   }
 
   openSearch(): void {

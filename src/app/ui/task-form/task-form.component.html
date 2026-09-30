@@ -1,5 +1,5 @@
 <section class="" id="form-container">
-  <form [formGroup]="taskForm" (ngSubmit)="OnSubmit()">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
     <input
       id="tache"
       [class.emptyInput]="!taskForm.valid && taskForm.touched"
