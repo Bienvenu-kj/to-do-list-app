@@ -36,7 +36,7 @@
             </svg>
           </div>
           <input
-            id="researchInput"
+            id="searchInput"
             (input)="searchTasks($event)"
             class="speeking border p-2 rounded-2xl bg-gray-100 w-full pl-10"
             type="search"
@@ -54,7 +54,7 @@
       }
     </header>
     @if(isSearching()){
-      <app-liste-taches/>
+      <app-task-list/>
     }
   </div>
 </main>

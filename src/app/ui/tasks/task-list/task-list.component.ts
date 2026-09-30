@@ -15,10 +15,10 @@ import { TaskSearchService } from '../../../services/task-search.service';
 import { TaskFormComponent } from '../../task-form/task-form.component';
 
 @Component({
-  selector: 'app-liste-taches',
+  selector: 'app-task-list',
   imports: [NgIf, CommonModule, TaskFormComponent],
-  templateUrl: './liste-taches.component.html',
-  styleUrl: './liste-taches.component.scss',
+  templateUrl: './task-list.component.html',
+  styleUrl: './task-list.component.scss',
 })
 export class TaskListComponent implements OnInit {
   private tasksManager = inject(TasksManagerService);
@@ -59,7 +59,7 @@ export class TaskListComponent implements OnInit {
   private longPressTimer?: ReturnType<typeof setTimeout>;
 
   constructor() {
-    if (this.activatedRoute.component?.name === '_ResearchComponent') {
+    if (this.activatedRoute.snapshot.routeConfig?.path === 'tasks/search') {
       this.isSearchPage.set(true);
     } else {
       this.isSearchPage.set(false);

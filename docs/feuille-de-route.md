@@ -4,8 +4,8 @@ Cette feuille de route organise les prochaines améliorations du projet dans un 
 
 ## 1. Améliorer l’architecture Angular
 
-- [ ] Harmoniser les noms actuellement mélangés entre le français et l’anglais.
-- [ ] Renommer l’interface `Taches` en `Tache` ou `Task`.
+- [x] Harmoniser les noms actuellement mélangés entre le français et l’anglais.
+- [x] Renommer l’interface `Taches` en `Tache` ou `Task`.
 - [ ] Rendre obligatoires les propriétés indispensables, notamment `id` et `etat`.
 - [ ] Remplacer les chaînes libres représentant l’état d’une tâche par un type strict.
 - [ ] Clarifier les responsabilités des composants et des services.
@@ -31,8 +31,8 @@ Cette feuille de route organise les prochaines améliorations du projet dans un 
 ## 3. Stabiliser l’environnement de développement
 
 - [ ] Utiliser une version LTS de Node.js compatible avec Angular 19.
-- [ ] Remplacer l’ancien script `ng build --prod` par une configuration moderne.
-- [ ] Ajouter des scripts explicites pour le build de production et les tests automatisés.
+- [x] Remplacer l’ancien script `ng build --prod` par une configuration moderne.
+- [x] Ajouter des scripts explicites pour le build de production et les tests automatisés.
 - [ ] Vérifier que `npm start`, `npm run build`, `npm run build:prod` et `npm test` fonctionnent de manière reproductible.
 - [ ] Vérifier et corriger la commande de déploiement GitHub Pages.
 - [ ] Rendre l’exécution de Chrome Headless fiable dans l’environnement de test.

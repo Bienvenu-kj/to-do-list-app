@@ -19,7 +19,7 @@ export class AuthService {
 
   startSearch(): void {
     sessionStorage.setItem('researching', 'true');
-    this.router.navigate(['researchtasks']);
+    this.router.navigate(['tasks', 'search']);
     this.refreshSearchState();
   }
 

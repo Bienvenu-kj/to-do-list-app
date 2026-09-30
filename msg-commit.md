@@ -1,6 +1,7 @@
-# refactor(notifications): harmoniser le service de notifications
+# refactor(structure): harmoniser les composants de tâches
 
-- harmonise en anglais l’état et les méthodes de notification
-- met à jour les composants consommateurs
-- supprime le constructeur et le `Subject` inutilisés
-- corrige la valeur du dimanche retournée par `Date.getDay()`
+- renomme les dossiers et fichiers des composants avec des termes anglais
+- harmonise les sélecteurs, classes, imports et chemins de templates
+- remplace le composant `research` par `task-search`
+- expose la recherche sur `/tasks/search` avec une redirection de compatibilité
+- actualise l’avancement de la feuille de route

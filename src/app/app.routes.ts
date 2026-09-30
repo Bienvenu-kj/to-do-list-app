@@ -5,13 +5,18 @@ import { AuthService } from './services/auth.service';
 
 export const routes: Routes = [
   {
-    path: 'researchtasks',
+    path: 'tasks/search',
     title: 'page de recherche',
-    loadComponent: () => import('./ui/research/research.component'),
+    loadComponent: () => import('./ui/task-search/task-search.component'),
     canActivate: [
       () => inject(AuthService).isLoggedIn(),
       () => inject(AuthService).isSearching(),
     ],
+  },
+  {
+    path: 'researchtasks',
+    pathMatch: 'full',
+    redirectTo: 'tasks/search',
   },
   {
     path: 'home',
@@ -21,7 +26,7 @@ export const routes: Routes = [
   {
     path: 'tasks',
     title: 'taches',
-    loadComponent: () => import('./ui/taches/taches.component'),
+    loadComponent: () => import('./ui/tasks/tasks.component'),
     canActivate: [() => inject(AuthService).isLoggedIn()],
   },
   {

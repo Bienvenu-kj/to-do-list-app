@@ -3,15 +3,15 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
 import { TaskSearchService } from '../../services/task-search.service';
-import { TaskListComponent } from '../taches/liste-taches/liste-taches.component';
+import { TaskListComponent } from '../tasks/task-list/task-list.component';
 
 @Component({
-  selector: 'app-research',
+  selector: 'app-task-search',
   imports: [TaskListComponent],
-  templateUrl: './research.component.html',
-  styleUrl: './research.component.scss',
+  templateUrl: './task-search.component.html',
+  styleUrl: './task-search.component.scss',
 })
-export default class ResearchComponent implements OnInit {
+export default class TaskSearchComponent implements OnInit {
   private taskManager = inject(TasksManagerService);
   private authService = inject(AuthService);
   private taskSearchService = inject(TaskSearchService);
@@ -30,7 +30,7 @@ export default class ResearchComponent implements OnInit {
   ngOnInit(): void {
     this.taskManager.refreshTasks();
     this.taskManager.refreshCompletedTasks();
-    document.getElementById('researchInput')?.focus();
+    document.getElementById('searchInput')?.focus();
     this.taskSearchService.resetSearch();
   }
 }

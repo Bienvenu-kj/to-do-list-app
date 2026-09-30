@@ -6,13 +6,13 @@ import { FormManagerService } from '../../services/form-manager.service';
 import { NotificationsService } from '../../services/notifications.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
 import { TaskFormComponent } from '../task-form/task-form.component';
-import { TaskListComponent } from './liste-taches/liste-taches.component';
+import { TaskListComponent } from './task-list/task-list.component';
 
 @Component({
-  selector: 'app-taches',
+  selector: 'app-tasks',
   imports: [TaskListComponent, TaskFormComponent, NgIf],
-  templateUrl: './taches.component.html',
-  styleUrl: './taches.component.scss',
+  templateUrl: './tasks.component.html',
+  styleUrl: './tasks.component.scss',
 })
 export default class TasksComponent implements OnInit {
   private tasksManager = inject(TasksManagerService);
