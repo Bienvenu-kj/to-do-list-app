@@ -1,6 +1,6 @@
-# refactor(components): harmoniser les composants de tâches
+# refactor(task-list): harmoniser le composant de liste
 
-- renomme en anglais les propriétés et méthodes des composants de page
-- remplace `TachesComponent` par `TasksComponent`
-- met à jour les références utilisées dans les templates
-- supprime les dépendances et propriétés devenues inutiles
+- remplace `ListeTachesComponent` par `TaskListComponent`
+- harmonise en anglais les états, méthodes et bindings du composant
+- supprime les propriétés et traitements devenus inutiles
+- améliore le typage du minuteur utilisé pour l’appui long

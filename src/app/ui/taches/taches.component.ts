@@ -6,11 +6,11 @@ import { FormManagerService } from '../../services/form-manager.service';
 import { NotificationsService } from '../../services/notifications.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
 import { TaskFormComponent } from '../task-form/task-form.component';
-import { ListeTachesComponent } from './liste-taches/liste-taches.component';
+import { TaskListComponent } from './liste-taches/liste-taches.component';
 
 @Component({
   selector: 'app-taches',
-  imports: [ListeTachesComponent, TaskFormComponent, NgIf],
+  imports: [TaskListComponent, TaskFormComponent, NgIf],
   templateUrl: './taches.component.html',
   styleUrl: './taches.component.scss',
 })

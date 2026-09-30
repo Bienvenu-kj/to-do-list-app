@@ -3,11 +3,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../services/Auth.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
 import { TaskSearchService } from '../../services/task-search.service';
-import { ListeTachesComponent } from '../taches/liste-taches/liste-taches.component';
+import { TaskListComponent } from '../taches/liste-taches/liste-taches.component';
 
 @Component({
   selector: 'app-research',
-  imports: [ListeTachesComponent],
+  imports: [TaskListComponent],
   templateUrl: './research.component.html',
   styleUrl: './research.component.scss',
 })
