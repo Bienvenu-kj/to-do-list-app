@@ -51,7 +51,7 @@
   </div>
 </div>
   @if(researching()){
-    @for (tache of tachesRechercheeNonTerminees(); track $index; let i= $index) { @let
+    @for (tache of filteredIncompleteTasks(); track $index; let i= $index) { @let
       id=tache.id;
       <div
         [class.tache-animation]="anime()"
@@ -103,7 +103,7 @@
       </div>
       </div>
       }
-    @for(tacheT of tachesRechercheeTerminees(); track $index;let i = $index){
+    @for(tacheT of filteredCompletedTasks(); track $index;let i = $index){
       @let id=tacheT.id;
       <div
         [class.tache-animation]="animeterminee"

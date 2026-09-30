@@ -13,7 +13,7 @@ import { Task } from '../../../models/task.model';
 import { AuthService } from '../../../services/Auth.service';
 import { FormManagerService } from '../../../services/form-manager.service';
 import { TasksManagerService } from '../../../services/tasks-manager.service';
-import { TasksResearchingService } from '../../../services/tasks-researching.service';
+import { TaskSearchService } from '../../../services/task-search.service';
 import { TaskFormComponent } from '../../task-form/task-form.component';
 
 @Component({
@@ -25,27 +25,27 @@ import { TaskFormComponent } from '../../task-form/task-form.component';
 export class ListeTachesComponent implements OnInit {
   private TaskManager = inject(TasksManagerService);
   authServ = inject(AuthService);
-  resarchServ = inject(TasksResearchingService);
+  private taskSearchService = inject(TaskSearchService);
   activedRoute = inject(ActivatedRoute);
   private formManager = inject(FormManagerService);
 
   @Input() motif: any;
 
-  valeurDeRecherche = this.resarchServ.champValeur;
+  searchQuery = this.taskSearchService.searchQuery;
 
   anime = signal(false);
   viewForm = this.formManager.viewForm;
   tachesTerminees = this.TaskManager.completedTasks;
   tachesBrutes = this.TaskManager.tasks;
 
-  tachesRecherchees = this.resarchServ.tachesFiltres;
-  tachesRechercheeTerminees = computed(() =>
-    this.tachesRecherchees().filter(
+  filteredTasks = this.taskSearchService.filteredTasks;
+  filteredCompletedTasks = computed(() =>
+    this.filteredTasks().filter(
       (tache) => tache.etat?.toLocaleLowerCase() === 'terminée',
     ),
   );
-  tachesRechercheeNonTerminees = computed(() =>
-    this.tachesRecherchees().filter(
+  filteredIncompleteTasks = computed(() =>
+    this.filteredTasks().filter(
       (tache) => tache.etat?.toLocaleLowerCase() === 'non terminée',
     ),
   );
@@ -70,20 +70,6 @@ export class ListeTachesComponent implements OnInit {
     } else {
       this.researching.set(false);
     }
-    // effect(()=>{
-    //   if(this.valeurDeRecherche()){
-    //     this.researching.set(true);
-    //     let tacheRechercheeFiltrees = [...this.tachesTerminees(), ...this.tachesBrutes()];
-    //       tacheRechercheeFiltrees = tacheRechercheeFiltrees.filter((tache) =>
-    //         tache.taskName
-    //           .toLocaleLowerCase()
-    //           .includes(this.valeurDeRecherche().toLocaleLowerCase())
-    //       );
-    //       this.tachesRecherchees.set(tacheRechercheeFiltrees);
-    //   }else{
-    //     this.researching.set(false);
-    //   }
-    // })
   }
 
   ngOnInit(): void {
@@ -101,7 +87,7 @@ export class ListeTachesComponent implements OnInit {
   supprimerTache() {
     this.TaskManager.deleteTask(this.id);
     this.motif = !this.motif;
-    this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
+    this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
 
   modifier() {
@@ -116,7 +102,7 @@ export class ListeTachesComponent implements OnInit {
     this.formManager.onViewingForm();
     this.formManager.onModifyingTask();
 
-    this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
+    this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
   onlongpressed: any;
 
@@ -150,7 +136,7 @@ export class ListeTachesComponent implements OnInit {
   marqueTacheCommeTerminee(id: number | undefined) {
     this.animeterminee = true;
     this.TaskManager.markTaskAsCompleted(id);
-    this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
+    this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
 
   inverseAnimeApres1s() {
@@ -160,7 +146,7 @@ export class ListeTachesComponent implements OnInit {
   marqueTacheCommeNonTerminee(id: number | undefined) {
     this.anime.set(true);
     this.TaskManager.markTaskAsIncomplete(id);
-    this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
+    this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
 
   onAjouteUntache(e: boolean) {

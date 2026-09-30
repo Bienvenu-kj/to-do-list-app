@@ -1,8 +1,8 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { AuthService } from '../../services/Auth.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
-import { TasksResearchingService } from '../../services/tasks-researching.service';
+import { TaskSearchService } from '../../services/task-search.service';
 import { ListeTachesComponent } from '../taches/liste-taches/liste-taches.component';
 
 @Component({
@@ -14,17 +14,14 @@ import { ListeTachesComponent } from '../taches/liste-taches/liste-taches.compon
 export default class ResearchComponent implements OnInit {
   taskManager = inject(TasksManagerService);
   private authServ = inject(AuthService);
-  private researchServ = inject(TasksResearchingService);
-  onVeutRecherhcher = this.researchServ.onVeutRecherhcher;
-  TacheTrouvee = this.researchServ.TacheTrouvee;
-  tachesFiltres = computed(() => this.researchServ.tachesFiltres());
-  champsRecherche!: HTMLInputElement;
+  private taskSearchService = inject(TaskSearchService);
+  isSearching = this.taskSearchService.isSearching;
+  matchingTaskCount = this.taskSearchService.matchingTaskCount;
+  searchInput!: HTMLInputElement;
 
-  RecherTaches(event: Event) {
-    this.champsRecherche = event.target as HTMLInputElement;
-    let champs = event.target as HTMLInputElement;
-    let champs_valeur = champs.value;
-    this.researchServ.rechercheTache(champs_valeur);
+  searchTasks(event: Event): void {
+    this.searchInput = event.target as HTMLInputElement;
+    this.taskSearchService.searchTasks(this.searchInput.value);
   }
 
   onVeutPlusChercher() {
@@ -35,7 +32,6 @@ export default class ResearchComponent implements OnInit {
     this.taskManager.refreshTasks();
     this.taskManager.refreshCompletedTasks();
     document.getElementById('researchInput')?.focus();
-    this.researchServ.tachesCourantesRercherchees();
-    this.researchServ.reunialiseRerchercheesRecenctes();
+    this.taskSearchService.resetSearch();
   }
 }

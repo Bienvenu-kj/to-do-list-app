@@ -37,23 +37,23 @@
           </div>
           <input
             id="researchInput"
-            (input)="RecherTaches($event)"
+            (input)="searchTasks($event)"
             class="speeking border p-2 rounded-2xl bg-gray-100 w-full pl-10"
             type="search"
             placeholder="Rechercher des taches"
           />
         </div>
       </div>
-      @if(onVeutRecherhcher()){
+      @if(isSearching()){
       <div class="resultRecherche">
         <div class="tache-ttr text-blue-600 text-center">
-          {{ TacheTrouvee() }}
-          {{ TacheTrouvee() && TacheTrouvee() === 1 ? "résultat" : "résultats" }}
+          {{ matchingTaskCount() }}
+          {{ matchingTaskCount() === 1 ? "résultat" : "résultats" }}
         </div>
       </div>
       }
     </header>
-    @if(onVeutRecherhcher()){
+    @if(isSearching()){
       <app-liste-taches/>
     }
   </div>
