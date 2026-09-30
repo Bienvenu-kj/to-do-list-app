@@ -53,7 +53,7 @@ export class TaskFormComponent implements OnInit {
       };
       if (task.notification) {
         if (this.formManager.isNotificationDateValid(task.notification)) {
-          this.notificationsService.pushNotificationForDoingTask(task);
+          this.notificationsService.scheduleTaskNotification(task);
           if (this.isEditingTask()) {
             this.tasksManager.updateTask(task);
           } else {

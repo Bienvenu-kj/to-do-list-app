@@ -1,6 +1,6 @@
-# refactor(auth): harmoniser le service de session
+# refactor(notifications): harmoniser le service de notifications
 
-- normalise le nom du fichier `auth.service.ts`
-- harmonise en anglais l’état et les méthodes de recherche
-- met à jour les gardes de routes et les composants consommateurs
-- supprime la propriété `userName` inutilisée
+- harmonise en anglais l’état et les méthodes de notification
+- met à jour les composants consommateurs
+- supprime le constructeur et le `Subject` inutilisés
+- corrige la valeur du dimanche retournée par `Date.getDay()`

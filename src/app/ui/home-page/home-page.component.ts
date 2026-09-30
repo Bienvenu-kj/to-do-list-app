@@ -12,13 +12,13 @@ import { NotificationsService } from '../../services/notifications.service';
 export default class HomePageComponent {
   constructor(
     private authService: AuthService,
-    private notifServ: NotificationsService,
+    private notificationsService: NotificationsService,
   ) {}
 
-  login(e: MouseEvent, champPrenom: HTMLInputElement) {
-    e.preventDefault();
-    if (champPrenom.value) {
-      this.notifServ.setFirstConnexion(true, champPrenom.value);
+  login(event: MouseEvent, firstNameInput: HTMLInputElement): void {
+    event.preventDefault();
+    if (firstNameInput.value) {
+      this.notificationsService.setFirstLogin(true, firstNameInput.value);
     }
     this.authService.login();
   }

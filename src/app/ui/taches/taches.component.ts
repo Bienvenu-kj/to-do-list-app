@@ -21,11 +21,11 @@ export default class TasksComponent implements OnInit {
   private notificationsService = inject(NotificationsService);
 
   ngOnInit(): void {
-    const isFirstLogin = this.notificationsService.firstConnexion();
+    const isFirstLogin = this.notificationsService.isFirstLogin();
     if (isFirstLogin) {
       const userName = this.notificationsService.userName() as string;
       alert(`Bienvenue ${userName[0].toLocaleUpperCase() + userName.slice(1)}`);
-      this.notificationsService.setFirstConnexion();
+      this.notificationsService.setFirstLogin();
     }
   }
 

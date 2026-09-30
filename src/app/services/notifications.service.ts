@@ -1,5 +1,5 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
-import { Subject, timer } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { timer } from 'rxjs';
 
 import { Task } from '../models/task.model';
 
@@ -7,55 +7,55 @@ import { Task } from '../models/task.model';
   providedIn: 'root',
 })
 export class NotificationsService {
-  constructor() {}
-  firstConnexion = signal(false);
-  userName: WritableSignal<string | undefined> = signal('');
-  setFirstConnexion(state = false, username?: string) {
-    this.firstConnexion.set(state);
+  isFirstLogin = signal(false);
+  userName = signal<string | undefined>('');
 
+  setFirstLogin(state = false, username?: string): void {
+    this.isFirstLogin.set(state);
     if (username) this.userName.set(username);
   }
 
-  notification = new Subject<string>();
-  setNotification(date: Date | number, tache: Task) {
+  scheduleNotification(date: Date | number, task: Task): void {
     timer(date).subscribe({
       next: () => {
         new Notification(
-          `Il est temps pour vous de faire votre tache : "${tache.taskName}"`,
+          `Il est temps pour vous de faire votre tache : "${task.taskName}"`,
         );
       },
     });
   }
-  dayOfTheWeek(dayOfTheWeek: number) {
-    let dayofTheWeek: string | null = null;
+
+  getDayName(dayOfTheWeek: number): string {
+    let dayName: string | null = null;
     switch (dayOfTheWeek) {
       case 1:
-        dayofTheWeek = 'Lundi';
+        dayName = 'Lundi';
         break;
       case 2:
-        dayofTheWeek = 'Mardi';
+        dayName = 'Mardi';
         break;
       case 3:
-        dayofTheWeek = 'Mercred';
+        dayName = 'Mercred';
         break;
       case 4:
-        dayofTheWeek = 'Jeudi';
+        dayName = 'Jeudi';
         break;
       case 5:
-        dayofTheWeek = 'Vendredi';
+        dayName = 'Vendredi';
         break;
       case 6:
-        dayofTheWeek = 'Samedi';
+        dayName = 'Samedi';
         break;
-      case 7:
-        dayofTheWeek = 'Dimanche';
+      case 0:
+        dayName = 'Dimanche';
         break;
     }
-    return dayofTheWeek as string;
+    return dayName as string;
   }
-  pushNotificationForDoingTask(Userdata: Task) {
-    if (Userdata.notification) {
-      const date = new Date(Userdata.notification);
+
+  scheduleTaskNotification(task: Task): void {
+    if (task.notification) {
+      const date = new Date(task.notification);
       // on verifie si la date est bien correcte
       if (isNaN(date.getTime())) {
         console.log('Invalide date');
@@ -74,14 +74,14 @@ export class NotificationsService {
             new Notification(
               'Vous avez défini une notification pour votre tâche',
               {
-                body: `Nous allons vous notifier quand ce temps (${this.dayOfTheWeek(date.getDay())} ${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}) arriveras ! `,
+                body: `Nous allons vous notifier quand ce temps (${this.getDayName(date.getDay())} ${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}) arriveras ! `,
                 icon: 'favicon.ico',
 
                 requireInteraction: true,
-                tag: `${Userdata.id}`,
+                tag: `${task.id}`,
               },
             );
-            this.setNotification(date, Userdata);
+            this.scheduleNotification(date, task);
           } else {
             alert('Permission refusée');
           }
