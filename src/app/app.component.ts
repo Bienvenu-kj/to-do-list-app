@@ -1,5 +1,5 @@
 import { CommonModule} from '@angular/common';
-import { Component} from '@angular/core';
+import { Component, inject, OnInit} from '@angular/core';
 import { RouterOutlet, TitleStrategy } from '@angular/router';
 
 
@@ -9,6 +9,9 @@ import { RouterOutlet, TitleStrategy } from '@angular/router';
   templateUrl: './app.component.html',
   styles: ``,
 })
-export class AppComponent {
-  
+export class AppComponent implements OnInit{
+  ngOnInit(): void {
+
+  }
+
 }

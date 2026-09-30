@@ -9,12 +9,15 @@
       </p>
       <form class="p-4 flex flex-col gap-y-4" action="">
         <input
+          id="prenom"
           class="bg-gray-50 rounded-2xl p-2 border-2"
           type="text"
           placeholder="Votre prénom ici !"
+          #prenom
+          name = "prenom"
         />
         <button
-          (click)="login($event)"
+          (click)="login($event,prenom)"
           class="text-white font-semibold shadow-conf rounded-2xl p-2 bg-blue-600"
         >
           Confirmer

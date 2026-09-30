@@ -1,38 +1,54 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import {
   Component,
+  effect,
   EventEmitter,
   inject,
   Input,
   OnInit,
+  OnDestroy,
   Output,
+  computed,
+  signal,
 } from '@angular/core';
 import { Taches } from '../../../models/taches.model';
 import { TasksManagerService } from '../../../services/tasks-manager.service';
-import { MenuManagerService } from '../../../services/menu-manager.service';
+import { TaskFormComponent } from '../../task-form/task-form.component';
+import { AuthService } from '../../../services/Auth.service';
+import { TasksResearchingService } from '../../../services/tasks-researching.service';
+import { ActivatedRoute } from '@angular/router';
+import {FormManagerService} from '../../../services/form-manager.service';
+  
 
 @Component({
   selector: 'app-liste-taches',
-  imports: [NgIf],
+  imports: [NgIf,CommonModule,TaskFormComponent],
   templateUrl: './liste-taches.component.html',
   styleUrl: './liste-taches.component.scss',
 })
 export class ListeTachesComponent implements OnInit {
   private TaskManager = inject(TasksManagerService);
-  private menuManager = inject(MenuManagerService);
-  @Input() listeTaches: any;
+  authServ = inject(AuthService);
+  resarchServ = inject(TasksResearchingService);
+  activedRoute = inject(ActivatedRoute);
+  private formManager = inject(FormManagerService);
+  
   @Input() motif: any;
-  @Input() anime: boolean = false;
-  @Output() recevoirMotif = new EventEmitter<void>();
-  @Output() voirLeFormulaire = new EventEmitter<boolean>();
-  @Output() elementAmodifier = new EventEmitter<Taches>();
-  @Output() recevoirSaPosition = new EventEmitter<number>();
-  @Output() OnVeutModifier = new EventEmitter<boolean>();
-  @Output() onSupprime = new EventEmitter<boolean>();
+  
+  
+  valeurDeRecherche = this.resarchServ.champValeur;
 
-  tacheTerminee = this.TaskManager.tachesTerminees;
+  anime = signal(false);
+  viewForm = this.formManager.viewForm;
+  tachesTerminees = this.TaskManager.tachesTerminees;
+  tachesBrutes = this.TaskManager.taches;
+
+  tachesRecherchees =this.resarchServ.tachesFiltres;
+  tachesRechercheeTerminees = computed(()=>this.tachesRecherchees().filter((tache)=>tache.etat?.toLocaleLowerCase()==="terminée"));
+  tachesRechercheeNonTerminees = computed(()=>this.tachesRecherchees().filter((tache)=>tache.etat?.toLocaleLowerCase()==="non terminée"));
+
   animeterminee = false;
-
+  researching = signal(false);
   //propriétés pour le menu contextuel
   classD = 'hidden';
   index!: number; // pour l'index de l'element séléctionné
@@ -45,30 +61,62 @@ export class ListeTachesComponent implements OnInit {
     left: ``,
     position: 'absolute',
   };
+constructor(){
+if(this.activedRoute.component?.name ==="_ResearchComponent"){
+  this.researching.set(true);
+}else{
+  this.researching.set(false);
+}
+  // effect(()=>{
+  //   if(this.valeurDeRecherche()){
+  //     this.researching.set(true);
+  //     let tacheRechercheeFiltrees = [...this.tachesTerminees(), ...this.tachesBrutes()];
+  //       tacheRechercheeFiltrees = tacheRechercheeFiltrees.filter((tache) =>
+  //         tache.taskName
+  //           .toLocaleLowerCase()
+  //           .includes(this.valeurDeRecherche().toLocaleLowerCase())
+  //       );
+  //       this.tachesRecherchees.set(tacheRechercheeFiltrees);
+  //   }else{
+  //     this.researching.set(false);
+  //   }
+  // })
+}
+  
+  ngOnInit(): void {
+    this.TaskManager.actualiseTaches();
+    this.TaskManager.actualiseTachesTerminees();
+  
+    document.addEventListener('click', (e) => {
+      const element = e.target as HTMLElement;
+      if (!element.closest('#contextMenu')) {
+        this.motif = false;
+      }
+    });
+    
+ 
+  }
 
   supprimerTache() {
-    console.log(this.id);
+    
     this.TaskManager.supprimerUnTache(this.id);
     this.motif = !this.motif;
-    this.listeTaches = this.TaskManager.taches();
-    this.tacheTerminee.set(this.TaskManager.tachesTerminees());
-    this.onSupprime.emit(true);
-  }
+    this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
+  } 
 
   modifier() {
     const toutesLesTaches: Taches[] = [
-      ...this.listeTaches,
-      ...this.tacheTerminee(),
+      ...this.tachesBrutes(),
+      ...this.tachesTerminees(),
     ];
     const elementAmodifier = toutesLesTaches.filter(
       (tache) => tache.id === this.id
     )[0];
-    this.TaskManager.ElementAmodifier(this.id);
-    // let elementAmodifier = this.TaskManager.elementAmodifier;
-    this.voirLeFormulaire.emit(true);
-    this.elementAmodifier.emit(elementAmodifier);
-    this.OnVeutModifier.emit(true);
-    // this.recevoirSaPosition.emit(this.index)
+    this.TaskManager.ElementAmodifier(this.id); 
+    this.formManager.onViewingForm();
+    this.formManager.onModifyingTask();
+
+    this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
   }
   onlongpressed: any;
 
@@ -82,8 +130,6 @@ export class ListeTachesComponent implements OnInit {
       this.classD = 'view';
       this.index = i;
       this.id = id as number;
-      // console.log(this.elementPosition.top, this.elementPosition.left);
-      console.log(this.tacheTerminee());
     }, 600);
   }
   OnTouchEnd() {
@@ -99,28 +145,26 @@ export class ListeTachesComponent implements OnInit {
     this.classD = 'view';
     this.index = index;
     this.id = id as number;
-    // console.log(this.elementPosition.top, this.elementPosition.left);
-    console.log(this.tacheTerminee);
   }
 
-  marqueTacheCommeTerminee(index: number) {
+  marqueTacheCommeTerminee(id: number|undefined) {
     this.animeterminee = true;
-    this.TaskManager.marqueTacheCommeTerminée(index);
+    this.TaskManager.marqueTacheCommeTerminée(id);
+    this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());    
   }
+  
   inverseAnimeApres1s() {
-    this.anime = false;
-  }
-  marqueTacheCommeNonTerminee(index: number) {
-    this.anime = true;
-    this.TaskManager.marqueTacheCommeNonTerminée(index);
+    this.anime.set(false);
   }
 
-  ngOnInit(): void {
-    document.addEventListener('click', (e) => {
-      const element = e.target as HTMLElement;
-      if (!element.closest('#contextMenu')) {
-        this.motif = false;
-      }
-    });
+  marqueTacheCommeNonTerminee(id: number|undefined) {
+    this.anime.set(true);
+    this.TaskManager.marqueTacheCommeNonTerminée(id);
+    this.resarchServ.actualiseLesTaches(this.valeurDeRecherche());
+    
+  }
+
+  onAjouteUntache(e: boolean) {
+    this.anime.set(e);
   }
 }

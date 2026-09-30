@@ -220,40 +220,34 @@
   --tw-bg-opacity: 1;
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
 }
-.bordure-t-l-r {
-  border-top-width: 1px;
-  border-left-width: 1px;
-  border-right-width: 1px;
+
+.addTask {
+  max-height: 50px;
+  height: 50px;
+  width: 50px;
+  max-width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .btnShadow {
   box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
   z-index: 200;
 }
 .recherche {
-  color: rgb(102, 100, 100);
-  font-weight: 600;
+  // color: rgb(102, 100, 100);
+  color: rgb(107, 114, 128);
+
+  font-weight: 500;
 }
 .lesDisparus {
   transition: all 0.6s ease-in-out;
   transition-behavior: smooth;
 }
-// .startReaserching {
-//   transition: all 0.5s ease-in-out;
-//   transition-behavior: smooth;
-//   transform: translateY(-100%);
-// }
-// .startReaserchingB {
-//   @keyframes impressionne {
-//     from {
-//       opacity: 0;
-//       // transform: translateY(50%);
-//     }
-//     to {
-//       opacity: 1;
-//       transform: translateY(0);
-//     }
-//   }
-//   & {
-//     animation: impressionne 0.45s 0.09s ease-in-out;
-//   }
-// }
+
+h1{
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+

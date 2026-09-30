@@ -13,6 +13,8 @@ import { NgIf } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Taches } from '../../models/taches.model';
 import { TitleStrategy } from '@angular/router';
+import { NotificationsService } from '../../services/notifications.service';
+import {FormManagerService} from '../../services/form-manager.service';
 
 @Component({
   selector: 'app-task-form',
@@ -23,20 +25,20 @@ import { TitleStrategy } from '@angular/router';
 export class TaskFormComponent implements OnInit {
   private tacheServ = inject(TasksManagerService); // inection du service de gestions de taches
   private menuManS = inject(MenuManagerService); //
-  @Output() recevoirLafermeture = new EventEmitter<boolean>();
-  @Output() onSoumet = new EventEmitter<boolean>();
-  @Output() onAjouteTache = new EventEmitter<boolean>();
-  elementAmodifier = input.required<Taches>();
-  onTenteDeModier = input.required<boolean>();
+  private notificationServ = inject(NotificationsService);
+  private formManager = inject(FormManagerService);
+  private fb = inject(FormBuilder);
 
-  fb = inject(FormBuilder);
-  cache = this.menuManS.cacheOUmontre;
+  elementAmodifier = this.tacheServ.elementAmodifier;
+  onTenteDeModier = this.formManager.needToModifyAtask;
+  
   taskForm = this.fb.nonNullable.group({
     taskName: ['', [Validators.required]],
+    notification : '',
   });
-
   empty!: {};
   testeur!: number;
+
   ngOnInit(): void {
     if (this.onTenteDeModier()) {
       const elementAinitialiser: Taches = this.elementAmodifier();
@@ -47,26 +49,39 @@ export class TaskFormComponent implements OnInit {
     (document.getElementById('tache') as HTMLInputElement).focus();
     document.addEventListener('click', (e) => {
       const element = e.target as HTMLElement;
-      if (!element.closest('#form-container')) {
-        this.recevoirLafermeture.emit(false);
+      if (!element.closest('#form-container')&&!element.closest("#addTask")&&!element.closest("#contextMenu")) {
+        this.formManager.actualiseModificateurs();
+        console.log("on est en form task");
       }
     });
-  }
+  } 
 
   OnSubmit() {
     if (this.taskForm.valid) {
+      
       const task: Taches = {
         ...this.taskForm.getRawValue(),
       };
-      if (this.onTenteDeModier()) {
-        // console.log(this.elementAmodifier().taskName, task.etat);
-        this.tacheServ.modiferTache(task);
-      } else {
-        this.tacheServ.ajoutTAches(task.taskName, 'Non terminée');
-        this.onAjouteTache.emit(true);
-      }
-      this.recevoirLafermeture.emit(false);
-      this.onSoumet.emit(true);
+      if(task.notification){
+        if(this.formManager.approuveLaDate(task.notification as string)) {
+          this.notificationServ.pushNotificationForDoingTask(task);
+          if (this.onTenteDeModier()) {
+            this.tacheServ.modiferTache(task);
+          } else {
+            this.tacheServ.ajoutTAches(task);
+            console.log(task);
+          }
+          this.formManager.actualiseModificateurs();
+        }
+      }else{
+        if (this.onTenteDeModier()) {
+          this.tacheServ.modiferTache(task);
+        } else {
+          this.tacheServ.ajoutTAches(task);
+          console.log(task);
+        }
+        this.formManager.actualiseModificateurs();
+      }      
     } else {
       this.taskForm.markAllAsTouched();
     }

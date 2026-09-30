@@ -7,9 +7,8 @@ export const routes: Routes = [
     path: 'researchtasks',
     title: 'page de recherche',
     loadComponent: () => import('./ui/research/research.component'),
-    canActivate: [() => inject(AuthService).isLogin()],
+    canActivate: [() => inject(AuthService).isLogin(), () => inject(AuthService).researching()],
   },
-
   {
     path: 'home',
     title: 'page-accueil',
@@ -36,3 +35,4 @@ export const routes: Routes = [
     redirectTo: '404',
   },
 ];
+

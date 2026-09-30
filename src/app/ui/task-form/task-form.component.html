@@ -28,9 +28,9 @@
           <path d="M6.38 18.7 4 21" />
           <path d="M17.64 18.67 20 21" />
         </svg>
-        Definir une notification
+        <input type="datetime-local" name="notification" id="notification" formControlName="notification">
       </button>
-      <button class="save-btn" type="submit" [disabled]="!taskForm.valid">
+      <button class="save-btn text-blue-600" type="submit" [disabled]="!taskForm.valid">
         ENREGISTRER
       </button>
     </div>

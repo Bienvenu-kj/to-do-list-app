@@ -29,6 +29,9 @@ section {
         color:/*#DA9E9E*/ #b66c6c rgb(209, 213, 219);
       }
     }
+    input[type="datetime-local"]{
+      padding: 0.35rem;
+    }
     .emptyInput {
       animation-name: signale;
       animation-duration: 0.2s;
@@ -44,7 +47,7 @@ section {
       margin-top: 1rem;
       display: flex;
       justify-content: space-between;
-      @media (max-width: 300px) {
+      @media (max-width: 400px) {
         & {
           flex-direction: column;
           row-gap: 1rem;
@@ -64,10 +67,11 @@ section {
       }
       .save-btn {
         background: transparent;
-        color: rgb(37, 99, 235);
+        font-weight: 600;
         /*border : 1px solid #B66C6C;*/
         &:disabled {
           color: rgb(136, 138, 141);
+          font-weight: 400;
         }
       }
     }
