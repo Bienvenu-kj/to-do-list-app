@@ -1,6 +1,6 @@
-# fix(tasks): corriger la sauvegarde des tâches terminées
+# chore(project): moderniser les scripts et documenter la feuille de route
 
-- enregistre la liste `tachesTerminees` après la suppression d’une tâche terminée
-- enregistre également la bonne liste après la modification d’une tâche terminée
-- évite d’écraser `finishedTasks` avec les tâches non terminées
-- harmonise le formatage du service de gestion des tâches
+- remplace les anciennes commandes de build et de déploiement
+- ajoute des scripts dédiés au build et aux tests d’intégration continue
+- documente les étapes de modernisation en commençant par l’architecture
+- nettoie le balisage inutilisé de la page principale
