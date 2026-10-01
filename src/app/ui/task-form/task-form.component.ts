@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { Task } from '../../models/task.model';
+import { TaskInput } from '../../models/task.model';
 import { FormManagerService } from '../../services/form-manager.service';
 import { NotificationsService } from '../../services/notifications.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
@@ -27,8 +27,10 @@ export class TaskFormComponent implements OnInit {
   });
   ngOnInit(): void {
     if (this.isEditingTask()) {
-      const taskToInitialize: Task = this.taskToEdit();
-      this.taskForm.patchValue(taskToInitialize);
+      const taskToInitialize = this.taskToEdit();
+      if (taskToInitialize) {
+        this.taskForm.patchValue(taskToInitialize);
+      }
     } else {
       this.taskForm.reset();
     }
@@ -48,7 +50,7 @@ export class TaskFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.taskForm.valid) {
-      const task: Task = {
+      const task: TaskInput = {
         ...this.taskForm.getRawValue(),
       };
       if (task.notification) {

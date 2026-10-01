@@ -1,160 +1,223 @@
 import { Injectable, signal } from '@angular/core';
 
-import { Task } from '../models/task.model';
+import { Task, TaskInput, TaskStatus } from '../models/task.model';
+
+type TaskStorageKey = 'unfinishedTasks' | 'finishedTasks';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksManagerService {
-  constructor() {}
-
-  tasks = signal<Task[]>(
-    JSON.parse(localStorage.getItem('unfinishedTasks') as string) || [],
-  );
-  taskToEdit = signal<Task>({
-    taskName: '',
-    etat: '',
-  });
-  taskToDelete = signal<Task>({
-    taskName: '',
-  });
+  tasks = signal<Task[]>(this.readTasks('unfinishedTasks', 'incomplete'));
+  taskToEdit = signal<Task | null>(null);
   completedTasks = signal<Task[]>(
-    JSON.parse(localStorage.getItem('finishedTasks') as string) || [],
+    this.readTasks('finishedTasks', 'completed'),
   );
 
-  markTaskAsCompleted(id: number | undefined) {
-    const incompleteTasks: Task[] =
-      JSON.parse(localStorage.getItem('unfinishedTasks') as string) || [];
-    let taskIndex = 0;
-    const completedTask = incompleteTasks.find((task, index) => {
-      taskIndex = index;
-      return task.id === id;
-    });
+  markTaskAsCompleted(id: number): void {
+    const completedTask = this.tasks().find((task) => task.id === id);
+    if (!completedTask) return;
 
-    incompleteTasks.splice(taskIndex, 1);
-    localStorage.setItem('unfinishedTasks', JSON.stringify(incompleteTasks));
-    this.refreshTasks();
+    const incompleteTasks = this.tasks().filter((task) => task.id !== id);
+    const completedTasks = [
+      { ...completedTask, status: 'completed' as const },
+      ...this.completedTasks(),
+    ];
 
-    let completedTasks =
-      JSON.parse(localStorage.getItem('finishedTasks') as string) || [];
-    completedTasks.unshift({
-      taskName: `${completedTask?.taskName}`,
-      etat: 'terminée',
-      id: completedTask?.id,
-      notification: completedTask?.notification,
-    });
-    localStorage.setItem('finishedTasks', JSON.stringify(completedTasks));
-    this.refreshCompletedTasks();
+    this.saveTasks('unfinishedTasks', incompleteTasks);
+    this.saveTasks('finishedTasks', completedTasks);
   }
 
-  markTaskAsIncomplete(id: number | undefined) {
-    const completedTasks: Task[] =
-      JSON.parse(localStorage.getItem('finishedTasks') as string) || [];
-    let taskIndex = 0;
-    const incompleteTask = completedTasks.find((task, index) => {
-      taskIndex = index;
-      return task.id === id;
-    });
+  markTaskAsIncomplete(id: number): void {
+    const incompleteTask = this.completedTasks().find(
+      (task) => task.id === id,
+    );
+    if (!incompleteTask) return;
 
-    completedTasks.splice(taskIndex, 1);
-    localStorage.setItem('finishedTasks', JSON.stringify(completedTasks));
-    this.refreshCompletedTasks();
+    const completedTasks = this.completedTasks().filter(
+      (task) => task.id !== id,
+    );
+    const incompleteTasks = [
+      { ...incompleteTask, status: 'incomplete' as const },
+      ...this.tasks(),
+    ];
 
-    let incompleteTasks =
-      JSON.parse(localStorage.getItem('unfinishedTasks') as string) || [];
-    incompleteTasks.unshift({
-      taskName: `${incompleteTask?.taskName}`,
-      etat: 'Non terminée',
-      id: incompleteTask?.id,
-      notification: incompleteTask?.notification,
-    });
-    localStorage.setItem('unfinishedTasks', JSON.stringify(incompleteTasks));
-    this.refreshTasks();
+    this.saveTasks('finishedTasks', completedTasks);
+    this.saveTasks('unfinishedTasks', incompleteTasks);
   }
 
-  deleteTask(id: number) {
-    this.refreshTasks();
-    this.refreshCompletedTasks();
-    let task: Task;
-    let index: number;
-    let allTasks = [...this.tasks(), ...this.completedTasks()];
-    for (let index = 0; index < allTasks.length; index++) {
-      task = allTasks[index];
-      if (task.id === id) {
-        this.taskToDelete.set(task);
-        break;
+  deleteTask(id: number): void {
+    const taskToDelete = [...this.tasks(), ...this.completedTasks()].find(
+      (task) => task.id === id,
+    );
+    if (!taskToDelete) return;
+
+    if (taskToDelete.status === 'incomplete') {
+      this.saveTasks(
+        'unfinishedTasks',
+        this.tasks().filter((task) => task.id !== id),
+      );
+    } else {
+      this.saveTasks(
+        'finishedTasks',
+        this.completedTasks().filter((task) => task.id !== id),
+      );
+    }
+  }
+
+  selectTaskToEdit(id: number): void {
+    const selectedTask = [...this.tasks(), ...this.completedTasks()].find(
+      (task) => task.id === id,
+    );
+    this.taskToEdit.set(selectedTask ?? null);
+  }
+
+  updateTask(taskInput: TaskInput): void {
+    const taskToEdit = this.taskToEdit();
+    if (!taskToEdit) return;
+
+    const updatedTask: Task = { ...taskToEdit, ...taskInput };
+    if (taskToEdit.status === 'incomplete') {
+      this.saveTasks(
+        'unfinishedTasks',
+        this.tasks().map((task) =>
+          task.id === taskToEdit.id ? updatedTask : task,
+        ),
+      );
+    } else {
+      this.saveTasks(
+        'finishedTasks',
+        this.completedTasks().map((task) =>
+          task.id === taskToEdit.id ? updatedTask : task,
+        ),
+      );
+    }
+  }
+
+  addTask(taskInput: TaskInput): void {
+    const task: Task = {
+      ...taskInput,
+      id: this.getNextTaskId(),
+      status: 'incomplete',
+    };
+    this.saveTasks('unfinishedTasks', [task, ...this.tasks()]);
+  }
+
+  refreshTasks(): void {
+    this.tasks.set(this.readTasks('unfinishedTasks', 'incomplete'));
+  }
+
+  refreshCompletedTasks(): void {
+    this.completedTasks.set(this.readTasks('finishedTasks', 'completed'));
+  }
+
+  private saveTasks(storageKey: TaskStorageKey, tasks: Task[]): void {
+    localStorage.setItem(storageKey, JSON.stringify(tasks));
+
+    if (storageKey === 'unfinishedTasks') {
+      this.tasks.set(tasks);
+    } else {
+      this.completedTasks.set(tasks);
+    }
+  }
+
+  private readTasks(
+    storageKey: TaskStorageKey,
+    defaultStatus: TaskStatus,
+  ): Task[] {
+    const storedValue = localStorage.getItem(storageKey);
+    if (!storedValue) return [];
+
+    try {
+      const parsedValue: unknown = JSON.parse(storedValue);
+      if (!Array.isArray(parsedValue)) return [];
+
+      let nextGeneratedId = this.getHighestStoredTaskId() + 1;
+      const tasks = parsedValue.flatMap((value): Task[] => {
+        if (!this.isRecord(value) || typeof value['taskName'] !== 'string') {
+          return [];
+        }
+
+        const status = this.readTaskStatus(value, defaultStatus);
+        const task: Task = {
+          id:
+            typeof value['id'] === 'number' && Number.isFinite(value['id'])
+              ? value['id']
+              : nextGeneratedId++,
+          taskName: value['taskName'],
+          status,
+        };
+
+        if (typeof value['notification'] === 'string') {
+          task.notification = value['notification'];
+        }
+
+        return [task];
+      });
+
+      const normalizedValue = JSON.stringify(tasks);
+      if (normalizedValue !== storedValue) {
+        localStorage.setItem(storageKey, normalizedValue);
       }
-    }
-    if (this.taskToDelete().etat?.toLocaleLowerCase() === 'non terminée') {
-      index = this.tasks().indexOf(this.taskToDelete());
-      this.tasks().splice(index, 1);
-      localStorage.setItem('unfinishedTasks', JSON.stringify(this.tasks()));
-      this.refreshTasks();
-    } else if (
-      this.taskToDelete().etat?.toLocaleLowerCase() === 'terminée'
-    ) {
-      index = this.completedTasks().indexOf(this.taskToDelete());
-      this.completedTasks().splice(index, 1);
-      localStorage.setItem(
-        'finishedTasks',
-        JSON.stringify(this.completedTasks()),
-      );
-      this.refreshCompletedTasks();
+
+      return tasks;
+    } catch {
+      return [];
     }
   }
 
-  selectTaskToEdit(id: number) {
-    let allTasks = [...this.tasks(), ...this.completedTasks()];
-    this.taskToEdit.set(
-      allTasks.filter((task) => task.id === id)[0],
+  private readTaskStatus(
+    value: Record<string, unknown>,
+    defaultStatus: TaskStatus,
+  ): TaskStatus {
+    if (value['status'] === 'incomplete' || value['status'] === 'completed') {
+      return value['status'];
+    }
+
+    if (typeof value['etat'] === 'string') {
+      return value['etat'].toLocaleLowerCase() === 'terminée'
+        ? 'completed'
+        : 'incomplete';
+    }
+
+    return defaultStatus;
+  }
+
+  private getNextTaskId(): number {
+    const ids = [...this.tasks(), ...this.completedTasks()].map(
+      (task) => task.id,
     );
+    return Math.max(0, ...ids) + 1;
   }
 
-  updateTask(task: Task) {
-    let index;
-    if (task.notification) {
-      this.taskToEdit().notification = task.notification;
-    }
-    if (this.taskToEdit().etat?.toLocaleLowerCase() === 'non terminée') {
-      index = this.tasks().indexOf(this.taskToEdit());
-      this.tasks()[index].taskName = task.taskName;
-      localStorage.setItem('unfinishedTasks', JSON.stringify(this.tasks()));
-      this.refreshTasks();
-    } else if (
-      this.taskToEdit().etat?.toLocaleLowerCase() === 'terminée'
-    ) {
-      index = this.completedTasks().indexOf(this.taskToEdit());
-      this.completedTasks()[index].taskName = task.taskName;
-      localStorage.setItem(
-        'finishedTasks',
-        JSON.stringify(this.completedTasks()),
-      );
-      this.refreshCompletedTasks();
-    }
-  }
+  private getHighestStoredTaskId(): number {
+    const storageKeys: TaskStorageKey[] = [
+      'unfinishedTasks',
+      'finishedTasks',
+    ];
+    const ids = storageKeys.flatMap((storageKey) => {
+      try {
+        const storedTasks: unknown = JSON.parse(
+          localStorage.getItem(storageKey) ?? '[]',
+        );
+        if (!Array.isArray(storedTasks)) return [];
 
-  addTask(task: Task) {
-    let tasks: Task[] =
-      JSON.parse(localStorage.getItem('unfinishedTasks') as string) || [];
-    const id = tasks.length + 1;
-    localStorage.setItem('id', `${id}`);
-    tasks.unshift({
-      taskName: task.taskName,
-      etat: `Non terminée`,
-      id: id,
-      notification: task.notification,
+        return storedTasks.flatMap((task): number[] =>
+          this.isRecord(task) &&
+          typeof task['id'] === 'number' &&
+          Number.isFinite(task['id'])
+            ? [task['id']]
+            : [],
+        );
+      } catch {
+        return [];
+      }
     });
-    localStorage.setItem('unfinishedTasks', JSON.stringify(tasks));
-    this.refreshTasks();
+
+    return Math.max(0, ...ids);
   }
-  refreshTasks() {
-    this.tasks.set(
-      JSON.parse(localStorage.getItem('unfinishedTasks') as string) || [],
-    );
-  }
-  refreshCompletedTasks() {
-    this.completedTasks.set(
-      JSON.parse(localStorage.getItem('finishedTasks') as string) || [],
-    );
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
   }
 }

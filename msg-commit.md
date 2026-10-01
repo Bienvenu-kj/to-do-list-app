@@ -1,7 +1,8 @@
-# refactor(structure): harmoniser les composants de tâches
+# refactor(tasks): renforcer le modèle de tâche
 
-- renomme les dossiers et fichiers des composants avec des termes anglais
-- harmonise les sélecteurs, classes, imports et chemins de templates
-- remplace le composant `research` par `task-search`
-- expose la recherche sur `/tasks/search` avec une redirection de compatibilité
+- remplace `etat` par un statut anglais strictement typé
+- rend obligatoires l’identifiant et le statut des tâches enregistrées
+- sépare les données du formulaire avec le type `TaskInput`
+- migre et valide les anciennes tâches stockées localement
+- sécurise les identifiants et les opérations du gestionnaire de tâches
 - actualise l’avancement de la feuille de route

@@ -6,8 +6,8 @@ Cette feuille de route organise les prochaines améliorations du projet dans un 
 
 - [x] Harmoniser les noms actuellement mélangés entre le français et l’anglais.
 - [x] Renommer l’interface `Taches` en `Tache` ou `Task`.
-- [ ] Rendre obligatoires les propriétés indispensables, notamment `id` et `etat`.
-- [ ] Remplacer les chaînes libres représentant l’état d’une tâche par un type strict.
+- [x] Rendre obligatoires les propriétés indispensables, notamment `id` et `status`.
+- [x] Remplacer les chaînes libres représentant l’état d’une tâche par un type strict.
 - [ ] Clarifier les responsabilités des composants et des services.
 - [ ] Extraire la gestion de `localStorage` dans un service dédié.
 - [ ] Centraliser les opérations d’ajout, de modification, de suppression et de changement d’état.

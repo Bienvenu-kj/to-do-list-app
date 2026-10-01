@@ -37,14 +37,10 @@ export class TaskListComponent implements OnInit {
 
   filteredTasks = this.taskSearchService.filteredTasks;
   filteredCompletedTasks = computed(() =>
-    this.filteredTasks().filter(
-      (task) => task.etat?.toLocaleLowerCase() === 'terminée',
-    ),
+    this.filteredTasks().filter((task) => task.status === 'completed'),
   );
   filteredIncompleteTasks = computed(() =>
-    this.filteredTasks().filter(
-      (task) => task.etat?.toLocaleLowerCase() === 'non terminée',
-    ),
+    this.filteredTasks().filter((task) => task.status === 'incomplete'),
   );
 
   isCompletedTaskAnimating = false;
@@ -116,13 +112,13 @@ export class TaskListComponent implements OnInit {
     this.selectedTaskId = taskId as number;
   }
 
-  markTaskAsCompleted(taskId: number | undefined): void {
+  markTaskAsCompleted(taskId: number): void {
     this.isCompletedTaskAnimating = true;
     this.tasksManager.markTaskAsCompleted(taskId);
     this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
 
-  markTaskAsIncomplete(taskId: number | undefined): void {
+  markTaskAsIncomplete(taskId: number): void {
     this.isTaskAnimating.set(true);
     this.tasksManager.markTaskAsIncomplete(taskId);
     this.taskSearchService.refreshSearchResults(this.searchQuery());

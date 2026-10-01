@@ -1,6 +1,10 @@
+export type TaskStatus = 'incomplete' | 'completed';
+
 export interface Task {
-  id?: number;
+  id: number;
   taskName: string;
-  etat?: string;
+  status: TaskStatus;
   notification?: string;
 }
+
+export type TaskInput = Omit<Task, 'id' | 'status'>;

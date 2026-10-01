@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { timer } from 'rxjs';
 
-import { Task } from '../models/task.model';
+import { TaskInput } from '../models/task.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class NotificationsService {
     if (username) this.userName.set(username);
   }
 
-  scheduleNotification(date: Date | number, task: Task): void {
+  scheduleNotification(date: Date | number, task: TaskInput): void {
     timer(date).subscribe({
       next: () => {
         new Notification(
@@ -53,7 +53,7 @@ export class NotificationsService {
     return dayName as string;
   }
 
-  scheduleTaskNotification(task: Task): void {
+  scheduleTaskNotification(task: TaskInput): void {
     if (task.notification) {
       const date = new Date(task.notification);
       // on verifie si la date est bien correcte
@@ -78,7 +78,7 @@ export class NotificationsService {
                 icon: 'favicon.ico',
 
                 requireInteraction: true,
-                tag: `${task.id}`,
+                tag: task.taskName,
               },
             );
             this.scheduleNotification(date, task);
