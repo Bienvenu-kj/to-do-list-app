@@ -1,8 +1,5 @@
-# refactor(tasks): renforcer le modèle de tâche
+# chore(project): préparer les prochaines évolutions
 
-- remplace `etat` par un statut anglais strictement typé
-- rend obligatoires l’identifiant et le statut des tâches enregistrées
-- sépare les données du formulaire avec le type `TaskInput`
-- migre et valide les anciennes tâches stockées localement
-- sécurise les identifiants et les opérations du gestionnaire de tâches
-- actualise l’avancement de la feuille de route
+- supprime les anciens prototypes de service worker inutilisés
+- documente les fonctionnalités envisagées pour l’application
+- ajoute le wireframe de conception du projet
