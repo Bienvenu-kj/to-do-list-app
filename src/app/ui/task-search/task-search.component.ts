@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
@@ -9,6 +14,7 @@ import { TaskListComponent } from '../tasks/task-list/task-list.component';
   selector: 'app-task-search',
   imports: [TaskListComponent],
   templateUrl: './task-search.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './task-search.component.scss',
 })
 export default class TaskSearchComponent implements OnInit {

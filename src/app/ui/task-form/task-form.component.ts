@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { TaskInput } from '../../models/task.model';
@@ -10,6 +15,7 @@ import { TasksManagerService } from '../../services/tasks-manager.service';
   selector: 'app-task-form',
   imports: [ReactiveFormsModule],
   templateUrl: './task-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './task-form.component.scss',
 })
 export class TaskFormComponent implements OnInit {

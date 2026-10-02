@@ -1,7 +1,7 @@
-# chore(angular): migrer vers Angular 21
+# chore(angular): migrer vers Angular 22
 
-- met à jour Angular Core vers la version 21.2.25
-- met à jour Angular CLI vers la version 21.2.24
-- applique les migrations officielles du framework
-- convertit les derniers `*ngIf` vers la syntaxe moderne `@if`
-- supprime les imports Angular devenus inutiles
+- met à jour Angular et Angular CLI vers la version 22.2.1
+- met à jour TypeScript vers la version 6.0.3
+- adopte le nouveau builder `@angular/build`
+- préserve le comportement existant avec `ChangeDetectionStrategy.Eager`
+- adapte les diagnostics du compilateur Angular 22

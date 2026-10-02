@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
 import { NotificationsService } from '../../services/notifications.service';
@@ -7,6 +7,7 @@ import { NotificationsService } from '../../services/notifications.service';
   selector: 'app-home-page',
   imports: [],
   templateUrl: './home-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home-page.component.scss',
 })
 export default class HomePageComponent {

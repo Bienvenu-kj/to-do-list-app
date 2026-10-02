@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
 import { FormManagerService } from '../../services/form-manager.service';
@@ -11,6 +16,7 @@ import { TaskListComponent } from './task-list/task-list.component';
   selector: 'app-tasks',
   imports: [TaskListComponent, TaskFormComponent],
   templateUrl: './tasks.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tasks.component.scss',
 })
 export default class TasksComponent implements OnInit {

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -18,6 +19,7 @@ import { TaskFormComponent } from '../../task-form/task-form.component';
   selector: 'app-task-list',
   imports: [CommonModule, TaskFormComponent],
   templateUrl: './task-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './task-list.component.scss',
 })
 export class TaskListComponent implements OnInit {
