@@ -1,4 +1,4 @@
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
@@ -16,7 +16,7 @@ import { TaskFormComponent } from '../../task-form/task-form.component';
 
 @Component({
   selector: 'app-task-list',
-  imports: [NgIf, CommonModule, TaskFormComponent],
+  imports: [CommonModule, TaskFormComponent],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
 })

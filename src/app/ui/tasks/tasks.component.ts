@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
@@ -10,7 +9,7 @@ import { TaskListComponent } from './task-list/task-list.component';
 
 @Component({
   selector: 'app-tasks',
-  imports: [TaskListComponent, TaskFormComponent, NgIf],
+  imports: [TaskListComponent, TaskFormComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss',
 })

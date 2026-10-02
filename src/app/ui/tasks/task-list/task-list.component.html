@@ -1,319 +1,323 @@
 <section class="liste_taches flex flex-col gap-y-3 pb-3" id="list_taches">
-  <div *ngIf="isContextMenuOpen" id="couverture" class="couverture fixed w-full left-0 top-0 h-full"></div>
-  <div
-  *ngIf="isContextMenuOpen"
-  id="contextMenu"
-  class="menuContextuel"
-  [class]="contextMenuClass"
-  [style]="contextMenuPosition"
->
-  <div class="hoverItem" (click)="editTask()">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-pencil"
-    >
-      <path
-        d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
-      />
-      <path d="m15 5 4 4" />
-    </svg>
-
-    Modifier la tâche
-  </div>
-  <div class="hoverItem" (click)="deleteTask()">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-trash-2"
-    >
-      <path d="M3 6h18" />
-      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-      <line x1="10" x2="10" y1="11" y2="17" />
-      <line x1="14" x2="14" y1="11" y2="17" />
-    </svg>
-    Suprrimer la tâche
-  </div>
-</div>
-  @if(isSearchPage()){
-    @for (task of filteredIncompleteTasks(); track $index) { @let
-      id=task.id;
-      <div
-        [class.tache-animation]="isTaskAnimating()"
-        (touchstart)="handleTouchStart($event, id)"
-        (touchend)="handleTouchEnd()"
-        (contextmenu)="openContextMenu($event, id)"
-        style = "box-shadow: 0 2px 20px rgba(0,0,0,0.08)"
-        class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
+  @if (isContextMenuOpen) {
+    <div id="couverture" class="couverture fixed w-full left-0 top-0 h-full"></div>
+  }
+  @if (isContextMenuOpen) {
+    <div
+      id="contextMenu"
+      class="menuContextuel"
+      [class]="contextMenuClass"
+      [style]="contextMenuPosition"
       >
-        <div
-          (click)="markTaskAsCompleted(id)"
-          class="marqueur"
-        
-        >
-          <svg width="17" height="17" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g fill="trasparent" fill-rule="evenodd">
-              <path d="M0 22.5C0 10.0736 10.0736 0 22.5 0C34.9264 0 45 10.0736 45 22.5C45 34.9264 34.9264 45 22.5 45C10.0736 45 0 34.9264 0 22.5Z" />
-              <path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM8.71143 36.2886Q3 30.5772 3 22.5Q3 14.4228 8.71143 8.71143Q14.423 3 22.5 3Q30.577 3 36.2886 8.71143Q42 14.4228 42 22.5Q42 30.5772 36.2886 36.2886Q30.5771 42 22.5 42Q14.4229 42 8.71143 36.2886Z" fill="gray" fill-rule="evenodd" />
-            </g>
+      <div class="hoverItem" (click)="editTask()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-pencil"
+          >
+          <path
+            d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+            />
+            <path d="m15 5 4 4" />
           </svg>
-      </div>
-      <div class="flex flex-col w-full gap-1  overflow-x-hidden">
-        <p class="tache font-semibold ">{{ task.taskName }}</p>
-        @if(task.notification){
-          <p class="tache font-semibold text-sm flex items-center gap-1 ">
-            <svg
-            class=""
-            style="width:0.9rem;height:0.9rem"
+          Modifier la tâche
+        </div>
+        <div class="hoverItem" (click)="deleteTask()">
+          <svg
             xmlns="http://www.w3.org/2000/svg"
-            
+            width="20"
+            height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="1"
+            stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="lucide lucide-alarm-clock text-blue-700"
-          >
-            <circle cx="12" cy="13" r="8" />
-            <path d="M12 9v4l2 2" />
-            <path d="M5 3 2 6" />
-            <path d="m22 6-3-3" />
-            <path d="M6.38 18.7 4 21" />
-            <path d="M17.64 18.67 20 21" />
+            class="lucide lucide-trash-2"
+            >
+            <path d="M3 6h18" />
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+            <line x1="10" x2="10" y1="11" y2="17" />
+            <line x1="14" x2="14" y1="11" y2="17" />
           </svg>
-            {{ task.notification | date : "dd/MM/YYYY HH:mm"}}
-          </p> 
-        }
-      </div>
-      </div>
-      }
-    @for(completedTask of filteredCompletedTasks(); track $index){
-      @let id=completedTask.id;
-      <div
-        [class.tache-animation]="isCompletedTaskAnimating"
-        (touchstart)="handleTouchStart($event, completedTask.id)"
-        (touchend)="handleTouchEnd()"
-        (contextmenu)="openContextMenu($event, completedTask.id)"
-        style = "box-shadow: 0 2px 20px rgba(0,0,0,0.08)"
-        class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
-      >
-        <div
-          (click)="markTaskAsIncomplete(id)"
-          class="marqueur"
-          class=""
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="27"
-            height="27"
-            viewBox="0 0 24 24"
-            fill="rgb(37,99,235)"
-            stroke="rgb(243, 244, 246)"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-circle-check"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <path d="m9 12 2 2 4-4" />
-          </svg>
+          Suprrimer la tâche
         </div>
-        <div class="tacheTerminee flex flex-col w-full gap-1  overflow-x-hidden">
-          <p class="tache font-semibold ">{{ completedTask.taskName }}</p>
-          @if(completedTask.notification){
-            <p class="tache font-semibold text-sm flex items-center gap-1 ">
-              <svg
-              class=""
-              style="width:0.9rem;height:0.9rem"
+      </div>
+    }
+    @if(isSearchPage()){
+      @for (task of filteredIncompleteTasks(); track $index) { @let
+        id=task.id;
+        <div
+          [class.tache-animation]="isTaskAnimating()"
+          (touchstart)="handleTouchStart($event, id)"
+          (touchend)="handleTouchEnd()"
+          (contextmenu)="openContextMenu($event, id)"
+          style = "box-shadow: 0 2px 20px rgba(0,0,0,0.08)"
+          class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
+          >
+          <div
+            (click)="markTaskAsCompleted(id)"
+            class="marqueur"
+
+            >
+            <svg width="17" height="17" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g fill="trasparent" fill-rule="evenodd">
+                <path d="M0 22.5C0 10.0736 10.0736 0 22.5 0C34.9264 0 45 10.0736 45 22.5C45 34.9264 34.9264 45 22.5 45C10.0736 45 0 34.9264 0 22.5Z" />
+                <path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM8.71143 36.2886Q3 30.5772 3 22.5Q3 14.4228 8.71143 8.71143Q14.423 3 22.5 3Q30.577 3 36.2886 8.71143Q42 14.4228 42 22.5Q42 30.5772 36.2886 36.2886Q30.5771 42 22.5 42Q14.4229 42 8.71143 36.2886Z" fill="gray" fill-rule="evenodd" />
+              </g>
+            </svg>
+          </div>
+          <div class="flex flex-col w-full gap-1  overflow-x-hidden">
+            <p class="tache font-semibold ">{{ task.taskName }}</p>
+            @if(task.notification){
+              <p class="tache font-semibold text-sm flex items-center gap-1 ">
+                <svg
+                  class=""
+                  style="width:0.9rem;height:0.9rem"
+                  xmlns="http://www.w3.org/2000/svg"
+
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-alarm-clock text-blue-700"
+                  >
+                  <circle cx="12" cy="13" r="8" />
+                  <path d="M12 9v4l2 2" />
+                  <path d="M5 3 2 6" />
+                  <path d="m22 6-3-3" />
+                  <path d="M6.38 18.7 4 21" />
+                  <path d="M17.64 18.67 20 21" />
+                </svg>
+                {{ task.notification | date : "dd/MM/YYYY HH:mm"}}
+              </p>
+            }
+          </div>
+        </div>
+      }
+      @for(completedTask of filteredCompletedTasks(); track $index){
+        @let id=completedTask.id;
+        <div
+          [class.tache-animation]="isCompletedTaskAnimating"
+          (touchstart)="handleTouchStart($event, completedTask.id)"
+          (touchend)="handleTouchEnd()"
+          (contextmenu)="openContextMenu($event, completedTask.id)"
+          style = "box-shadow: 0 2px 20px rgba(0,0,0,0.08)"
+          class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
+          >
+          <div
+            (click)="markTaskAsIncomplete(id)"
+            class="marqueur"
+            class=""
+            >
+            <svg
               xmlns="http://www.w3.org/2000/svg"
-              
+              width="27"
+              height="27"
               viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
+              fill="rgb(37,99,235)"
+              stroke="rgb(243, 244, 246)"
+              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-alarm-clock text-blue-700"
-            >
-              <circle cx="12" cy="13" r="8" />
-              <path d="M12 9v4l2 2" />
-              <path d="M5 3 2 6" />
-              <path d="m22 6-3-3" />
-              <path d="M6.38 18.7 4 21" />
-              <path d="M17.64 18.67 20 21" />
+              class="lucide lucide-circle-check"
+              >
+              <circle cx="12" cy="12" r="10" />
+              <path d="m9 12 2 2 4-4" />
             </svg>
-              {{ completedTask.notification | date : "dd/MM/YYYY HH:mm"}}
-            </p> 
-          }
+          </div>
+          <div class="tacheTerminee flex flex-col w-full gap-1  overflow-x-hidden">
+            <p class="tache font-semibold ">{{ completedTask.taskName }}</p>
+            @if(completedTask.notification){
+              <p class="tache font-semibold text-sm flex items-center gap-1 ">
+                <svg
+                  class=""
+                  style="width:0.9rem;height:0.9rem"
+                  xmlns="http://www.w3.org/2000/svg"
+
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-alarm-clock text-blue-700"
+                  >
+                  <circle cx="12" cy="13" r="8" />
+                  <path d="M12 9v4l2 2" />
+                  <path d="M5 3 2 6" />
+                  <path d="m22 6-3-3" />
+                  <path d="M6.38 18.7 4 21" />
+                  <path d="M17.64 18.67 20 21" />
+                </svg>
+                {{ completedTask.notification | date : "dd/MM/YYYY HH:mm"}}
+              </p>
+            }
+          </div>
         </div>
-      </div>
       }
-  }
-  @else{
-  @if (tasks().length) {
-  <div class="tache-non-terminee">
-    <h3 class="mb-3 px-4 tache-ttr" [class.tache-tr-animation]="isTaskAnimating()">
-      {{
-        tasks().length && tasks().length == 1
+    }
+    @else{
+    @if (tasks().length) {
+      <div class="tache-non-terminee">
+        <h3 class="mb-3 px-4 tache-ttr" [class.tache-tr-animation]="isTaskAnimating()">
+          {{
+          tasks().length && tasks().length == 1
           ? "Tâche non terminée"
           : "Tâches non terminées"
-      }}
-    </h3>
+          }}
+        </h3>
 
-    <div class="flex flex-col gap-y-3 pb-3">
-      @for (task of tasks(); track $index) { @let
-      id=task.id;
-      <div
-        [class.tache-animation]="isTaskAnimating()"
-        (touchstart)="handleTouchStart($event, id)"
-        (touchend)="handleTouchEnd()"
-        (contextmenu)="openContextMenu($event, id)"
-        style = "box-shadow: 0 2px 20px rgba(0,0,0,0.08)"
-        class="rounded-xl bg-gray-100 w-full h-max p-4 flex items-center gap-x-4"
-      >
-        <div
-          (click)="markTaskAsCompleted(id)"
-          class="marqueur"
-        
-        >
-          <svg width="17" height="17" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g fill="trasparent" fill-rule="evenodd">
-              <path d="M0 22.5C0 10.0736 10.0736 0 22.5 0C34.9264 0 45 10.0736 45 22.5C45 34.9264 34.9264 45 22.5 45C10.0736 45 0 34.9264 0 22.5Z" />
-              <path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM8.71143 36.2886Q3 30.5772 3 22.5Q3 14.4228 8.71143 8.71143Q14.423 3 22.5 3Q30.577 3 36.2886 8.71143Q42 14.4228 42 22.5Q42 30.5772 36.2886 36.2886Q30.5771 42 22.5 42Q14.4229 42 8.71143 36.2886Z" fill="gray" fill-rule="evenodd" />
-            </g>
-          </svg>
-      </div>
-    <div class="flex flex-col w-full gap-1  overflow-x-hidden">
-        <p class="tache font-semibold ">{{ task.taskName }}</p>
-        @if(task.notification){
-          <p class="tache font-semibold text-sm flex items-center gap-1 ">
-            <svg
-            class=""
-            style="width:0.9rem;height:0.9rem"
-            xmlns="http://www.w3.org/2000/svg"
-            
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-alarm-clock text-blue-700"
-          >
-            <circle cx="12" cy="13" r="8" />
-            <path d="M12 9v4l2 2" />
-            <path d="M5 3 2 6" />
-            <path d="m22 6-3-3" />
-            <path d="M6.38 18.7 4 21" />
-            <path d="M17.64 18.67 20 21" />
-          </svg>
-            {{ task.notification | date : "dd/MM/YYYY HH:mm"}}
-          </p> 
-        }
-      </div>
-      </div>
-      }
-    </div>
-  </div>
-  }
-  @if(completedTasks().length){
-  <div class="tache-termine-container">
-    <h3
-      class="mb-3 px-4 tache-ttr"
-      [class.tache-tr-animation]="isCompletedTaskAnimating"
-    >
-      {{
-        completedTasks().length && completedTasks().length == 1
-          ? "Tâche terminée"
-          : "Tâches terminées"
-      }}
-    </h3>
-    <div class="flex flex-col gap-y-3 pb-3">
-      @for(completedTask of completedTasks(); track $index){
-        @let id=completedTask.id;
-      <div
-        [class.tache-animation]="isCompletedTaskAnimating"
-        (touchstart)="handleTouchStart($event, completedTask.id)"
-        (touchend)="handleTouchEnd()"
-        (contextmenu)="openContextMenu($event, completedTask.id)"
-        style = "box-shadow: 0 2px 20px rgba(0,0,0,0.08)"
-        class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
-      >
-        <div
-          (click)="markTaskAsIncomplete(id)"
-          class="marqueur"
-          class=""
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="27"
-            height="27"
-            viewBox="0 0 24 24"
-            fill="rgb(37,99,235)"
-            stroke="rgb(243, 244, 246)"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-circle-check"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <path d="m9 12 2 2 4-4" />
-          </svg>
-        </div>
-        <div class="tacheTerminee flex flex-col w-full gap-1  overflow-x-hidden">
-          <p class="tache font-semibold ">{{ completedTask.taskName }}</p>
-          @if(completedTask.notification){
-            <p class="tache font-semibold text-sm flex items-center gap-1 ">
-              <svg
-              class=""
-              style="width:0.9rem;height:0.9rem"
-              xmlns="http://www.w3.org/2000/svg"
-              
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-alarm-clock text-blue-700"
-            >
-              <circle cx="12" cy="13" r="8" />
-              <path d="M12 9v4l2 2" />
-              <path d="M5 3 2 6" />
-              <path d="m22 6-3-3" />
-              <path d="M6.38 18.7 4 21" />
-              <path d="M17.64 18.67 20 21" />
-            </svg>
-              {{ completedTask.notification | date : "dd/MM/YYYY HH:mm"}}
-            </p> 
+        <div class="flex flex-col gap-y-3 pb-3">
+          @for (task of tasks(); track $index) { @let
+            id=task.id;
+            <div
+              [class.tache-animation]="isTaskAnimating()"
+              (touchstart)="handleTouchStart($event, id)"
+              (touchend)="handleTouchEnd()"
+              (contextmenu)="openContextMenu($event, id)"
+              style = "box-shadow: 0 2px 20px rgba(0,0,0,0.08)"
+              class="rounded-xl bg-gray-100 w-full h-max p-4 flex items-center gap-x-4"
+              >
+              <div
+                (click)="markTaskAsCompleted(id)"
+                class="marqueur"
+
+                >
+                <svg width="17" height="17" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="trasparent" fill-rule="evenodd">
+                    <path d="M0 22.5C0 10.0736 10.0736 0 22.5 0C34.9264 0 45 10.0736 45 22.5C45 34.9264 34.9264 45 22.5 45C10.0736 45 0 34.9264 0 22.5Z" />
+                    <path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM8.71143 36.2886Q3 30.5772 3 22.5Q3 14.4228 8.71143 8.71143Q14.423 3 22.5 3Q30.577 3 36.2886 8.71143Q42 14.4228 42 22.5Q42 30.5772 36.2886 36.2886Q30.5771 42 22.5 42Q14.4229 42 8.71143 36.2886Z" fill="gray" fill-rule="evenodd" />
+                  </g>
+                </svg>
+              </div>
+              <div class="flex flex-col w-full gap-1  overflow-x-hidden">
+                <p class="tache font-semibold ">{{ task.taskName }}</p>
+                @if(task.notification){
+                  <p class="tache font-semibold text-sm flex items-center gap-1 ">
+                    <svg
+                      class=""
+                      style="width:0.9rem;height:0.9rem"
+                      xmlns="http://www.w3.org/2000/svg"
+
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-alarm-clock text-blue-700"
+                      >
+                      <circle cx="12" cy="13" r="8" />
+                      <path d="M12 9v4l2 2" />
+                      <path d="M5 3 2 6" />
+                      <path d="m22 6-3-3" />
+                      <path d="M6.38 18.7 4 21" />
+                      <path d="M17.64 18.67 20 21" />
+                    </svg>
+                    {{ task.notification | date : "dd/MM/YYYY HH:mm"}}
+                  </p>
+                }
+              </div>
+            </div>
           }
         </div>
       </div>
-      }
-    </div>
-  </div>
+    }
+    @if(completedTasks().length){
+      <div class="tache-termine-container">
+        <h3
+          class="mb-3 px-4 tache-ttr"
+          [class.tache-tr-animation]="isCompletedTaskAnimating"
+          >
+          {{
+          completedTasks().length && completedTasks().length == 1
+          ? "Tâche terminée"
+          : "Tâches terminées"
+          }}
+        </h3>
+        <div class="flex flex-col gap-y-3 pb-3">
+          @for(completedTask of completedTasks(); track $index){
+            @let id=completedTask.id;
+            <div
+              [class.tache-animation]="isCompletedTaskAnimating"
+              (touchstart)="handleTouchStart($event, completedTask.id)"
+              (touchend)="handleTouchEnd()"
+              (contextmenu)="openContextMenu($event, completedTask.id)"
+              style = "box-shadow: 0 2px 20px rgba(0,0,0,0.08)"
+              class="rounded-xl bg-gray-100 h-max p-4 flex items-center gap-x-4"
+              >
+              <div
+                (click)="markTaskAsIncomplete(id)"
+                class="marqueur"
+                class=""
+                >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="27"
+                  height="27"
+                  viewBox="0 0 24 24"
+                  fill="rgb(37,99,235)"
+                  stroke="rgb(243, 244, 246)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-circle-check"
+                  >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              </div>
+              <div class="tacheTerminee flex flex-col w-full gap-1  overflow-x-hidden">
+                <p class="tache font-semibold ">{{ completedTask.taskName }}</p>
+                @if(completedTask.notification){
+                  <p class="tache font-semibold text-sm flex items-center gap-1 ">
+                    <svg
+                      class=""
+                      style="width:0.9rem;height:0.9rem"
+                      xmlns="http://www.w3.org/2000/svg"
+
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-alarm-clock text-blue-700"
+                      >
+                      <circle cx="12" cy="13" r="8" />
+                      <path d="M12 9v4l2 2" />
+                      <path d="M5 3 2 6" />
+                      <path d="m22 6-3-3" />
+                      <path d="M6.38 18.7 4 21" />
+                      <path d="M17.64 18.67 20 21" />
+                    </svg>
+                    {{ completedTask.notification | date : "dd/MM/YYYY HH:mm"}}
+                  </p>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
   }
-  }
-  <section id="formTaskContainer" *ngIf="isFormVisible()" class="">
-    <div id="formTask" class="conteneur">
-      <app-task-form
-      />
-    </div>
+  @if (isFormVisible()) {
+    <section id="formTaskContainer" class="">
+      <div id="formTask" class="conteneur">
+        <app-task-form
+          />
+        </div>
+      </section>
+    }
   </section>
-</section>
