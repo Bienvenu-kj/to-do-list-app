@@ -1,7 +1,6 @@
-# chore(angular): migrer vers Angular 22
+# chore(styles): intégrer Tailwind CSS 4
 
-- met à jour Angular et Angular CLI vers la version 22.2.1
-- met à jour TypeScript vers la version 6.0.3
-- adopte le nouveau builder `@angular/build`
-- préserve le comportement existant avec `ChangeDetectionStrategy.Eager`
-- adapte les diagnostics du compilateur Angular 22
+- installe Tailwind CSS 4 et son intégration PostCSS
+- remplace l'ancien CSS généré par l'import Tailwind moderne
+- conserve les styles globaux et la palette visuelle existante
+- documente la répartition des responsabilités entre Tailwind et SCSS
