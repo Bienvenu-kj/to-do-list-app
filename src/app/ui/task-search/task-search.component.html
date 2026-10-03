@@ -1,8 +1,8 @@
-<main id="conteneur" class="startResearch header">
-  <div class="bordure-t-l-r">
-    <header id="header" class="pos-stck header">
-      <div class="barre-recherche">
-        <div role="button" class="retourner" (click)="closeSearch()" >
+<main id="conteneur" class="header h-full">
+  <div class="h-full">
+    <header id="header" class="header sticky top-0">
+      <div class="barre-recherche flex items-center gap-x-4">
+        <div role="button" class="retourner" (click)="closeSearch()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -17,7 +17,7 @@
             />
           </svg>
         </div>
-        <div class="researchContainer relative flex items-center">
+        <div class="researchContainer relative flex flex-1 items-center">
           <div class="absolute left-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -38,23 +38,23 @@
           <input
             id="searchInput"
             (input)="searchTasks($event)"
-            class="speeking border p-2 rounded-2xl bg-gray-100 w-full pl-10"
+            class="placeholder:text-gray-400 focus:border p-2 rounded-2xl bg-gray-100 w-full pl-10"
             type="search"
             placeholder="Rechercher des taches"
           />
         </div>
       </div>
-      @if(isSearching()){
-      <div class="resultRecherche">
-        <div class="tache-ttr text-blue-600 text-center">
-          {{ matchingTaskCount() }}
-          {{ matchingTaskCount() === 1 ? "résultat" : "résultats" }}
+      @if (isSearching()) {
+        <div class="mt-4">
+          <div class="tache-ttr text-blue-600 text-center">
+            {{ matchingTaskCount() }}
+            {{ matchingTaskCount() === 1 ? "résultat" : "résultats" }}
+          </div>
         </div>
-      </div>
       }
     </header>
-    @if(isSearching()){
-      <app-task-list/>
+    @if (isSearching()) {
+      <app-task-list />
     }
   </div>
 </main>

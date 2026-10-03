@@ -1,16 +1,11 @@
-main.conteneur {
-  padding-top: 2rem;
-}
 a {
   color: rgb(66, 135, 247);
   font-weight: 600;
 }
+
 .solution {
-  li {
-    position: relative;
-  }
   li::before {
-    content: "> ";
+    content: "> " / "";
     color: rgb(59, 130, 246);
     font-size: 1.1rem;
     font-weight: bold;

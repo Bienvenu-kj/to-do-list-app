@@ -1,14 +1,17 @@
-<section class="" id="form-container">
-  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+<section class="z-[1100] w-full rounded-t-2xl bg-white p-4" id="form-container">
+  <form class="w-full" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
     <input
       id="tache"
+      class="w-full rounded-lg border-0 bg-gray-100 p-[0.8rem]"
       [class.emptyInput]="!taskForm.valid && taskForm.touched"
-      [class.untouched]="taskForm.untouched"
       placeholder="Ajouter un élément aux tâches"
       formControlName="taskName"
     />
-    <div>
-      <button class="notification" type="button">
+    <div class="mt-4 flex justify-between max-[400px]:flex-col max-[400px]:gap-y-4">
+      <button
+        class="flex items-center gap-[0.4rem] rounded-lg border-0 bg-gray-100 px-[0.8rem] py-2"
+        type="button"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -28,9 +31,19 @@
           <path d="M6.38 18.7 4 21" />
           <path d="M17.64 18.67 20 21" />
         </svg>
-        <input type="datetime-local" name="notification" id="notification" formControlName="notification">
+        <input
+          class="p-[0.35rem]"
+          type="datetime-local"
+          name="notification"
+          id="notification"
+          formControlName="notification"
+        >
       </button>
-      <button class="save-btn text-blue-600" type="submit" [disabled]="!taskForm.valid">
+      <button
+        class="rounded-lg border-0 bg-transparent px-[0.8rem] py-2 font-semibold text-blue-600 disabled:font-normal disabled:text-[rgb(136,138,141)]"
+        type="submit"
+        [disabled]="!taskForm.valid"
+      >
         ENREGISTRER
       </button>
     </div>

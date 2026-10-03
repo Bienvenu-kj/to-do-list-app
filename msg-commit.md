@@ -1,6 +1,7 @@
-# chore(styles): intégrer Tailwind CSS 4
+# refactor(styles): supprimer les utilitaires Tailwind dupliqués
 
-- installe Tailwind CSS 4 et son intégration PostCSS
-- remplace l'ancien CSS généré par l'import Tailwind moderne
-- conserve les styles globaux et la palette visuelle existante
-- documente la répartition des responsabilités entre Tailwind et SCSS
+- déplace les styles utilitaires simples dans les templates
+- conserve les styles spécifiques dans chaque composant
+- supprime les règles inutilisées et les anciens préfixes manuels
+- distingue les animations de tâches et respecte la réduction des mouvements
+- simplifie les styles du formulaire et de ses états de validation
