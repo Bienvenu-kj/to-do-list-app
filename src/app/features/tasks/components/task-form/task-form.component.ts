@@ -8,7 +8,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { TaskInput } from '../../models/task.model';
 import { FormManagerService } from '../../services/form-manager.service';
-import { NotificationsService } from '../../services/notifications.service';
+import { NotificationsService } from '../../../../services/notifications.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
 
 @Component({

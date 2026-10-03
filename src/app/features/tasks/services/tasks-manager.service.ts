@@ -10,9 +10,7 @@ type TaskStorageKey = 'unfinishedTasks' | 'finishedTasks';
 export class TasksManagerService {
   tasks = signal<Task[]>(this.readTasks('unfinishedTasks', 'incomplete'));
   taskToEdit = signal<Task | null>(null);
-  completedTasks = signal<Task[]>(
-    this.readTasks('finishedTasks', 'completed'),
-  );
+  completedTasks = signal<Task[]>(this.readTasks('finishedTasks', 'completed'));
 
   markTaskAsCompleted(id: number): void {
     const completedTask = this.tasks().find((task) => task.id === id);
@@ -29,9 +27,7 @@ export class TasksManagerService {
   }
 
   markTaskAsIncomplete(id: number): void {
-    const incompleteTask = this.completedTasks().find(
-      (task) => task.id === id,
-    );
+    const incompleteTask = this.completedTasks().find((task) => task.id === id);
     if (!incompleteTask) return;
 
     const completedTasks = this.completedTasks().filter(
@@ -191,10 +187,7 @@ export class TasksManagerService {
   }
 
   private getHighestStoredTaskId(): number {
-    const storageKeys: TaskStorageKey[] = [
-      'unfinishedTasks',
-      'finishedTasks',
-    ];
+    const storageKeys: TaskStorageKey[] = ['unfinishedTasks', 'finishedTasks'];
     const ids = storageKeys.flatMap((storageKey) => {
       try {
         const storedTasks: unknown = JSON.parse(

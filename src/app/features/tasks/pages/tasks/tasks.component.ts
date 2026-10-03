@@ -5,12 +5,12 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { FormManagerService } from '../../services/form-manager.service';
-import { NotificationsService } from '../../services/notifications.service';
+import { NotificationsService } from '../../../../services/notifications.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
-import { TaskFormComponent } from '../task-form/task-form.component';
-import { TaskListComponent } from './task-list/task-list.component';
+import { TaskFormComponent } from '../../components/task-form/task-form.component';
+import { TaskListComponent } from '../../components/task-list/task-list.component';
 
 @Component({
   selector: 'app-tasks',

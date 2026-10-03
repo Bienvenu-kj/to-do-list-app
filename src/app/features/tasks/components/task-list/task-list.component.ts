@@ -10,10 +10,10 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { FormManagerService } from '../../../services/form-manager.service';
-import { TasksManagerService } from '../../../services/tasks-manager.service';
-import { TaskSearchService } from '../../../services/task-search.service';
-import { TaskFormComponent } from '../../task-form/task-form.component';
+import { FormManagerService } from '../../services/form-manager.service';
+import { TasksManagerService } from '../../services/tasks-manager.service';
+import { TaskSearchService } from '../../services/task-search.service';
+import { TaskFormComponent } from '../task-form/task-form.component';
 
 @Component({
   selector: 'app-task-list',

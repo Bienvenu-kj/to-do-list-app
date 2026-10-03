@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { timer } from 'rxjs';
 
-import { TaskInput } from '../models/task.model';
+import { TaskInput } from '../features/tasks/models/task.model';
 
 @Injectable({
   providedIn: 'root',

@@ -7,7 +7,8 @@ export const routes: Routes = [
   {
     path: 'tasks/search',
     title: 'page de recherche',
-    loadComponent: () => import('./ui/task-search/task-search.component'),
+    loadComponent: () =>
+      import('./features/tasks/pages/task-search/task-search.component'),
     canActivate: [
       () => inject(AuthService).isLoggedIn(),
       () => inject(AuthService).isSearching(),
@@ -21,18 +22,20 @@ export const routes: Routes = [
   {
     path: 'home',
     title: 'page-accueil',
-    loadComponent: () => import('./ui/home-page/home-page.component'),
+    loadComponent: () => import('./pages/home-page/home-page.component'),
   },
   {
     path: 'tasks',
     title: 'taches',
-    loadComponent: () => import('./ui/tasks/tasks.component'),
+    loadComponent: () =>
+      import('./features/tasks/pages/tasks/tasks.component'),
     canActivate: [() => inject(AuthService).isLoggedIn()],
   },
   {
     path: '404',
     title: 'page non trouvée',
-    loadComponent: () => import('./ui/page-not-found/page-not-found.component'),
+    loadComponent: () =>
+      import('./pages/page-not-found/page-not-found.component'),
   },
   {
     path: '',

@@ -5,10 +5,10 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { TasksManagerService } from '../../services/tasks-manager.service';
 import { TaskSearchService } from '../../services/task-search.service';
-import { TaskListComponent } from '../tasks/task-list/task-list.component';
+import { TaskListComponent } from '../../components/task-list/task-list.component';
 
 @Component({
   selector: 'app-task-search',

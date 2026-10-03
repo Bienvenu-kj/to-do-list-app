@@ -1,7 +1,7 @@
-# refactor(styles): supprimer les utilitaires Tailwind dupliqués
+# refactor(structure): organiser l'application par fonctionnalité
 
-- déplace les styles utilitaires simples dans les templates
-- conserve les styles spécifiques dans chaque composant
-- supprime les règles inutilisées et les anciens préfixes manuels
-- distingue les animations de tâches et respecte la réduction des mouvements
-- simplifie les styles du formulaire et de ses états de validation
+- regroupe le domaine des tâches dans `features/tasks`
+- sépare les pages des composants réutilisables
+- déplace les pages générales dans le dossier `pages`
+- corrige les imports et les routes après les déplacements
+- conserve le comportement existant de l'application
