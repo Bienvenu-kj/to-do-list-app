@@ -10,32 +10,32 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { FormManagerService } from '../../services/form-manager.service';
-import { TasksManagerService } from '../../services/tasks-manager.service';
+import { TaskFormService } from '../../services/task-form.service';
+import { TaskStoreService } from '../../services/task-store.service';
 import { TaskSearchService } from '../../services/task-search.service';
-import { TaskFormComponent } from '../task-form/task-form.component';
+import { TaskForm } from '../task-form/task-form';
 
 @Component({
   selector: 'app-task-list',
-  imports: [CommonModule, TaskFormComponent],
-  templateUrl: './task-list.component.html',
+  imports: [CommonModule, TaskForm],
+  templateUrl: './task-list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './task-list.component.scss',
+  styleUrl: './task-list.scss',
 })
-export class TaskListComponent implements OnInit {
-  private tasksManager = inject(TasksManagerService);
+export class TaskList implements OnInit {
+  private taskStore = inject(TaskStoreService);
   private taskSearchService = inject(TaskSearchService);
   private activatedRoute = inject(ActivatedRoute);
-  private formManager = inject(FormManagerService);
+  private taskFormService = inject(TaskFormService);
 
   @Input() isContextMenuOpen = false;
 
   searchQuery = this.taskSearchService.searchQuery;
 
   isTaskAnimating = signal(false);
-  isFormVisible = this.formManager.isFormVisible;
-  completedTasks = this.tasksManager.completedTasks;
-  tasks = this.tasksManager.tasks;
+  isFormVisible = this.taskFormService.isFormVisible;
+  completedTasks = this.taskStore.completedTasks;
+  tasks = this.taskStore.tasks;
 
   filteredTasks = this.taskSearchService.filteredTasks;
   filteredCompletedTasks = computed(() =>
@@ -65,8 +65,8 @@ export class TaskListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tasksManager.refreshTasks();
-    this.tasksManager.refreshCompletedTasks();
+    this.taskStore.refreshTasks();
+    this.taskStore.refreshCompletedTasks();
 
     document.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
@@ -77,15 +77,15 @@ export class TaskListComponent implements OnInit {
   }
 
   deleteTask(): void {
-    this.tasksManager.deleteTask(this.selectedTaskId);
+    this.taskStore.deleteTask(this.selectedTaskId);
     this.isContextMenuOpen = false;
     this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
 
   editTask(): void {
-    this.tasksManager.selectTaskToEdit(this.selectedTaskId);
-    this.formManager.showForm();
-    this.formManager.startTaskEditing();
+    this.taskStore.selectTaskToEdit(this.selectedTaskId);
+    this.taskFormService.showForm();
+    this.taskFormService.startTaskEditing();
 
     this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
@@ -116,13 +116,13 @@ export class TaskListComponent implements OnInit {
 
   markTaskAsCompleted(taskId: number): void {
     this.isCompletedTaskAnimating = true;
-    this.tasksManager.markTaskAsCompleted(taskId);
+    this.taskStore.markTaskAsCompleted(taskId);
     this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
 
   markTaskAsIncomplete(taskId: number): void {
     this.isTaskAnimating.set(true);
-    this.tasksManager.markTaskAsIncomplete(taskId);
+    this.taskStore.markTaskAsIncomplete(taskId);
     this.taskSearchService.refreshSearchResults(this.searchQuery());
   }
 }

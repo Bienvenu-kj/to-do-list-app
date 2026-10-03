@@ -7,25 +7,25 @@ import {
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { TaskInput } from '../../models/task.model';
-import { FormManagerService } from '../../services/form-manager.service';
+import { TaskFormService } from '../../services/task-form.service';
 import { NotificationsService } from '../../../../services/notifications.service';
-import { TasksManagerService } from '../../services/tasks-manager.service';
+import { TaskStoreService } from '../../services/task-store.service';
 
 @Component({
   selector: 'app-task-form',
   imports: [ReactiveFormsModule],
-  templateUrl: './task-form.component.html',
+  templateUrl: './task-form.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './task-form.component.scss',
+  styleUrl: './task-form.scss',
 })
-export class TaskFormComponent implements OnInit {
-  private tasksManager = inject(TasksManagerService);
+export class TaskForm implements OnInit {
+  private taskStore = inject(TaskStoreService);
   private notificationsService = inject(NotificationsService);
-  private formManager = inject(FormManagerService);
+  private taskFormService = inject(TaskFormService);
   private fb = inject(FormBuilder);
 
-  taskToEdit = this.tasksManager.taskToEdit;
-  isEditingTask = this.formManager.isEditingTask;
+  taskToEdit = this.taskStore.taskToEdit;
+  isEditingTask = this.taskFormService.isEditingTask;
 
   taskForm = this.fb.nonNullable.group({
     taskName: ['', [Validators.required]],
@@ -48,7 +48,7 @@ export class TaskFormComponent implements OnInit {
         !element.closest('#addTask') &&
         !element.closest('#contextMenu')
       ) {
-        this.formManager.resetFormState();
+        this.taskFormService.resetFormState();
         console.log('on est en form task');
       }
     });
@@ -60,24 +60,24 @@ export class TaskFormComponent implements OnInit {
         ...this.taskForm.getRawValue(),
       };
       if (task.notification) {
-        if (this.formManager.isNotificationDateValid(task.notification)) {
+        if (this.taskFormService.isNotificationDateValid(task.notification)) {
           this.notificationsService.scheduleTaskNotification(task);
           if (this.isEditingTask()) {
-            this.tasksManager.updateTask(task);
+            this.taskStore.updateTask(task);
           } else {
-            this.tasksManager.addTask(task);
+            this.taskStore.addTask(task);
             console.log(task);
           }
-          this.formManager.resetFormState();
+          this.taskFormService.resetFormState();
         }
       } else {
         if (this.isEditingTask()) {
-          this.tasksManager.updateTask(task);
+          this.taskStore.updateTask(task);
         } else {
-          this.tasksManager.addTask(task);
+          this.taskStore.addTask(task);
           console.log(task);
         }
-        this.formManager.resetFormState();
+        this.taskFormService.resetFormState();
       }
     } else {
       this.taskForm.markAllAsTouched();

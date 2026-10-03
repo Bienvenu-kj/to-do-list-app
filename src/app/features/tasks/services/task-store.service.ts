@@ -7,7 +7,7 @@ type TaskStorageKey = 'unfinishedTasks' | 'finishedTasks';
 @Injectable({
   providedIn: 'root',
 })
-export class TasksManagerService {
+export class TaskStoreService {
   tasks = signal<Task[]>(this.readTasks('unfinishedTasks', 'incomplete'));
   taskToEdit = signal<Task | null>(null);
   completedTasks = signal<Task[]>(this.readTasks('finishedTasks', 'completed'));

@@ -1,7 +1,7 @@
-# refactor(structure): organiser l'application par fonctionnalité
+# refactor(naming): adopter les conventions Angular modernes
 
-- regroupe le domaine des tâches dans `features/tasks`
-- sépare les pages des composants réutilisables
-- déplace les pages générales dans le dossier `pages`
-- corrige les imports et les routes après les déplacements
-- conserve le comportement existant de l'application
+- supprime le suffixe `.component` des fichiers et des classes
+- simplifie les noms des pages `home` et `not-found`
+- renomme les services selon leur responsabilité réelle
+- met à jour les imports, les routes et les références de templates
+- adapte les tests unitaires aux nouveaux noms

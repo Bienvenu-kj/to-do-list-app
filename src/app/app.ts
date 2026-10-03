@@ -4,10 +4,10 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
+  templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styles: ``,
 })
-export class AppComponent implements OnInit {
+export class App implements OnInit {
   ngOnInit(): void {}
 }

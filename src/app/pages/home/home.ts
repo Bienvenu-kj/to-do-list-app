@@ -4,13 +4,13 @@ import { AuthService } from '../../services/auth.service';
 import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
-  selector: 'app-home-page',
+  selector: 'app-home',
   imports: [],
-  templateUrl: './home-page.component.html',
+  templateUrl: './home.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './home-page.component.scss',
+  styleUrl: './home.scss',
 })
-export default class HomePageComponent {
+export default class Home {
   constructor(
     private authService: AuthService,
     private notificationsService: NotificationsService,

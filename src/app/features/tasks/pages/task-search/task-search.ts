@@ -6,19 +6,19 @@ import {
 } from '@angular/core';
 
 import { AuthService } from '../../../../services/auth.service';
-import { TasksManagerService } from '../../services/tasks-manager.service';
+import { TaskStoreService } from '../../services/task-store.service';
 import { TaskSearchService } from '../../services/task-search.service';
-import { TaskListComponent } from '../../components/task-list/task-list.component';
+import { TaskList } from '../../components/task-list/task-list';
 
 @Component({
   selector: 'app-task-search',
-  imports: [TaskListComponent],
-  templateUrl: './task-search.component.html',
+  imports: [TaskList],
+  templateUrl: './task-search.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './task-search.component.scss',
+  styleUrl: './task-search.scss',
 })
-export default class TaskSearchComponent implements OnInit {
-  private taskManager = inject(TasksManagerService);
+export default class TaskSearch implements OnInit {
+  private taskStore = inject(TaskStoreService);
   private authService = inject(AuthService);
   private taskSearchService = inject(TaskSearchService);
   isSearching = this.taskSearchService.isSearching;
@@ -34,8 +34,8 @@ export default class TaskSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.taskManager.refreshTasks();
-    this.taskManager.refreshCompletedTasks();
+    this.taskStore.refreshTasks();
+    this.taskStore.refreshCompletedTasks();
     document.getElementById('searchInput')?.focus();
     this.taskSearchService.resetSearch();
   }

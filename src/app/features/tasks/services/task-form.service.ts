@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class FormManagerService {
+export class TaskFormService {
   isFormVisible = signal(false);
 
   isEditingTask = signal(false);

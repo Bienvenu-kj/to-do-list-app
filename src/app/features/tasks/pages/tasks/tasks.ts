@@ -6,23 +6,23 @@ import {
 } from '@angular/core';
 
 import { AuthService } from '../../../../services/auth.service';
-import { FormManagerService } from '../../services/form-manager.service';
+import { TaskFormService } from '../../services/task-form.service';
 import { NotificationsService } from '../../../../services/notifications.service';
-import { TasksManagerService } from '../../services/tasks-manager.service';
-import { TaskFormComponent } from '../../components/task-form/task-form.component';
-import { TaskListComponent } from '../../components/task-list/task-list.component';
+import { TaskStoreService } from '../../services/task-store.service';
+import { TaskForm } from '../../components/task-form/task-form';
+import { TaskList } from '../../components/task-list/task-list';
 
 @Component({
   selector: 'app-tasks',
-  imports: [TaskListComponent, TaskFormComponent],
-  templateUrl: './tasks.component.html',
+  imports: [TaskList, TaskForm],
+  templateUrl: './tasks.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './tasks.component.scss',
+  styleUrl: './tasks.scss',
 })
-export default class TasksComponent implements OnInit {
-  private tasksManager = inject(TasksManagerService);
+export default class Tasks implements OnInit {
+  private taskStore = inject(TaskStoreService);
   private authService = inject(AuthService);
-  formManager = inject(FormManagerService);
+  taskFormService = inject(TaskFormService);
   private notificationsService = inject(NotificationsService);
 
   ngOnInit(): void {
@@ -34,11 +34,11 @@ export default class TasksComponent implements OnInit {
     }
   }
 
-  tasks = this.tasksManager.tasks;
-  completedTasks = this.tasksManager.completedTasks;
+  tasks = this.taskStore.tasks;
+  completedTasks = this.taskStore.completedTasks;
 
   openTaskForm(): void {
-    this.formManager.showForm();
+    this.taskFormService.showForm();
   }
 
   openSearch(): void {

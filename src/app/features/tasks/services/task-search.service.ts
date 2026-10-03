@@ -1,20 +1,20 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 
 import { Task } from '../models/task.model';
-import { TasksManagerService } from './tasks-manager.service';
+import { TaskStoreService } from './task-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskSearchService {
-  private taskManager = inject(TasksManagerService);
+  private taskStore = inject(TaskStoreService);
 
   searchQuery = signal('');
   filteredTasks = signal<Task[]>([]);
   isSearching = signal(false);
   matchingTaskCount = signal(0);
-  incompleteTasks = computed(() => this.taskManager.tasks());
-  completedTasks = computed(() => this.taskManager.completedTasks());
+  incompleteTasks = computed(() => this.taskStore.tasks());
+  completedTasks = computed(() => this.taskStore.completedTasks());
   allTasks = computed(() => [
     ...this.incompleteTasks(),
     ...this.completedTasks(),
